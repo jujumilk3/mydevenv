@@ -20,7 +20,7 @@ class BaseConfigs:
 
 
 class TestConfigs(BaseConfigs):
-    # base    
+    # base
     ENV: str = "test"
 
 
@@ -32,7 +32,7 @@ class DevelopConfigs(BaseConfigs):
 class StageConfigs(BaseConfigs):
     # base
     ENV: str = "stage"
-    
+
 
 class ProductionConfigs(BaseConfigs):
     # base
