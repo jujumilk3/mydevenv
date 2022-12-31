@@ -1,5 +1,6 @@
 import asyncio
 import os
+
 import pytest
 import pytest_asyncio
 from loguru import logger
@@ -9,8 +10,8 @@ os.environ["ENV_NAME"] = "test"
 if os.getenv("ENV_NAME") not in ["test"]:
     msg = f"ENV_NAME is not test, it is {os.getenv('ENV_NAME')}"
     pytest.exit(msg)
-    
-    
+
+
 @pytest.fixture(scope="session")
 def event_loop():
     loop = asyncio.new_event_loop()
