@@ -1,7 +1,7 @@
 from sqlmodel import Field
 
-from app.models.base_model import CustomBaseModel
 from app.core.constants import ContentType
+from app.models.base_model import CustomBaseModel
 
 
 class Like(CustomBaseModel, table=True):
