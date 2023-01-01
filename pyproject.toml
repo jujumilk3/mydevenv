@@ -56,6 +56,9 @@ select = [
 ]
 target-version = "py310"
 line-length = 120
+ignore = [
+    "B008",  # do not perform function calls in argument defaults
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

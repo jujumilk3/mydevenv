@@ -49,13 +49,13 @@ def client():
 
 
 async def insert_default_test_data(conn):
-    logger.info(f"Just started insert_default_test_data")
+    logger.info("Just started insert_default_test_data")
     pass
 
 
 @pytest.fixture(scope="session")
 async def engine():
-    logger.info(f"engine fixture started")
+    logger.info("engine fixture started")
     logger.info(f"engine id: {id(engine)}")
     _engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     async with _engine.begin() as conn:
