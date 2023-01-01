@@ -14,29 +14,25 @@ class AuthService(BaseService):
         self.user_repository = user_repository
         super().__init__(user_repository)
 
-    def sign_in(self, sign_in_dto: AuthDto.SignIn):
-        find_user.email__eq = sign_in_dto.email
-        user: list[User] = self.user_repository.read_by_options(find_user)["founds"]
-        if len(user) < 1:
+    async def sign_in(self, sign_in_dto: AuthDto.SignIn):
+        found_user = await self.user_repository.select_user_by_email(sign_in_dto.email)
+        if not found_user:
             raise AuthError(detail="Incorrect email or password")
-        found_user = user[0]
-        if not found_user.is_activated:
-            raise AuthError(detail="Account is not active")
         if not verify_password(sign_in_dto.password, found_user.password):
             raise AuthError(detail="Incorrect email or password")
-        delattr(found_user, "password")
-        payload = AuthDto.JWTPayload(
-            email=found_user.email,
-            nickname=found_user.nickname,
+        if not found_user.is_activated:
+            raise AuthError(detail="Account is not active")
+        payload = AuthDto.Payload(
+            **found_user.dict()
         )
-        token_lifespan = timedelta(minutes=configs.JWT_ACCESS_EXPIRE)
-        access_token, expiration_datetime = create_access_token(payload.dict(), token_lifespan)
-        sign_in_result = {
-            "access_token": access_token,
-            "expiration": expiration_datetime,
-            "user_info": found_user,
-        }
-        return sign_in_result
+        token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
+        jwt = create_access_token(payload, token_lifespan)
+        jwt_payload = AuthDto.JWTPayload(
+            access_token=jwt["access_token"],
+            expiration=jwt["expiration"],
+            **payload.dict()
+        )
+        return jwt_payload
 
     async def sign_up(self, sing_up_dto: AuthDto.SignUp) -> AuthDto.JWTPayload:
         user_token = random_hash(length=12)

@@ -23,12 +23,12 @@ Base = declarative_base()
 class Database:
     def __init__(self, db_url: str) -> None:
         # db engine
-        self._engine = create_async_engine(db_url)
+        self.engine = create_async_engine(db_url)
 
         # db session factory
         self._session_factory = async_scoped_session(
             session_factory=orm.sessionmaker(
-                bind=self._engine,
+                bind=self.engine,
                 class_=AsyncSession,
                 autocommit=False,
                 autoflush=False,

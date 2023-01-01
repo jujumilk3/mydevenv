@@ -2,12 +2,13 @@ from fastapi import FastAPI
 from starlette import status
 from starlette.middleware.cors import CORSMiddleware
 
+from app.api.v1.route import router as v1_router
 from app.core.config import configs
 from app.core.container import Container
 from loguru import logger
 
 
-def create_app(v1_routers=None):
+def create_app():
     _app = FastAPI(
         title=configs.PROJECT_NAME,
         docs_url=f"{configs.API_PREFIX}/docs",
@@ -35,8 +36,8 @@ def create_app(v1_routers=None):
     def root():
         return "OK"
 
-    _app.include_router(v1_routers, prefix=configs.API_V1_STR)
-    logger.info(f"app created. Its ENV_NAME: {configs.ENV_NAME}")
+    _app.include_router(v1_router, prefix=configs.API_V1_STR)
+    logger.info(f"app created. Its ENV_NAME: {configs.ENV}")
     return _app
 
 

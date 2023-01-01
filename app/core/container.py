@@ -20,17 +20,17 @@ class Container(containers.DeclarativeContainer):
         modules=[
             "app.api.v1.endpoint.auth",
             "app.api.v1.endpoint.user",
-            "app.core.dependency.authentication",
+            "app.core.security",
         ]
     )
 
     db = providers.Singleton(Database, db_url=configs.DB_URL)
 
-    user_repository = providers.Factory(UserRepository, session_factory=db.provided.session)
-    like_repository = providers.Factory(LikeRepository, session_factory=db.provided.session)
-    tool_repository = providers.Factory(ToolRepository, session_factory=db.provided.session)
-    comment_repository = providers.Factory(CommentRepository, session_factory=db.provided.session)
-    category_repository = providers.Factory(CategoryRepository, session_factory=db.provided.session)
+    user_repository = providers.Factory(UserRepository, session_factory=db.provided.session_factory)
+    like_repository = providers.Factory(LikeRepository, session_factory=db.provided.session_factory)
+    tool_repository = providers.Factory(ToolRepository, session_factory=db.provided.session_factory)
+    comment_repository = providers.Factory(CommentRepository, session_factory=db.provided.session_factory)
+    category_repository = providers.Factory(CategoryRepository, session_factory=db.provided.session_factory)
 
     auth_service = providers.Factory(AuthService, user_repository=user_repository)
     user_service = providers.Factory(UserService, user_repository=user_repository)

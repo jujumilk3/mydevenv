@@ -1,10 +1,11 @@
 import os
 from pathlib import Path
+from loguru import logger
 
 
 class BaseConfigs:
     # base
-    ENV: str = os.getenv("ENV", "")
+    ENV: str = "dev"
     APP_ROOT_DIR: str = Path(__file__).parent.parent.parent
     PROJECT_NAME: str = "mydevenv"
 
@@ -63,5 +64,5 @@ elif ENV == "dev":
 elif ENV == "test":
     configs = TestConfigs()
 else:
-    print("ENV is not set.")
+    logger.info("ENV is not set. Use BaseConfigs.")
     configs = BaseConfigs()

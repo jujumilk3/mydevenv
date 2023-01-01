@@ -7,20 +7,23 @@ from passlib.context import CryptContext
 
 from app.core.config import configs
 from app.core.exception import AuthError
+from app.model.user import AuthDto
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
 
 
-def create_access_token(subject: dict, expires_delta: timedelta = None) -> (str, str):
+def create_access_token(subject: AuthDto.Payload, expires_delta: timedelta = None) -> (str, str):
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expiration = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
-    payload = {"exp": expire, **subject}
+        expiration = datetime.utcnow() + timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
+    payload = {"expiration": expiration, **subject}
     encoded_jwt = jwt.encode(payload, configs.JWT_SECRET_KEY, algorithm=configs.JWT_ALGORITHM)
-    expiration_datetime = expire.strftime(configs.DATETIME_FORMAT)
-    return encoded_jwt, expiration_datetime
+    return {
+        "access_token": encoded_jwt,
+        "expiration": expiration,
+    }
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
