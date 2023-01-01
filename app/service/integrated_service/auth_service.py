@@ -22,15 +22,11 @@ class AuthService(BaseService):
             raise AuthError(detail="Incorrect email or password")
         if not found_user.is_activated:
             raise AuthError(detail="Account is not active")
-        payload = AuthDto.Payload(
-            **found_user.dict()
-        )
+        payload = AuthDto.Payload(**found_user.dict())
         token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
         jwt_payload = AuthDto.JWTPayload(
-            access_token=jwt["access_token"],
-            expiration=jwt["expiration"],
-            **payload.dict()
+            access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict()
         )
         return jwt_payload
 

@@ -19,4 +19,3 @@ class UserRepository(BaseRepository):
             query_result = await session.execute(query)
             found_user = query_result.scalar()
             return found_user
-

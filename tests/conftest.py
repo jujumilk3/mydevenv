@@ -19,7 +19,6 @@ if os.getenv("ENV") not in ["test"]:
     pytest.exit(msg)
 
 
-
 @pytest.fixture(scope="session")
 def event_loop():
     loop = asyncio.new_event_loop()
