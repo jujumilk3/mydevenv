@@ -25,9 +25,7 @@ class AuthService(BaseService):
         payload = AuthDto.Payload(**found_user.dict())
         token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
-        return AuthDto.JWTPayload(
-            access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict()
-        )
+        return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())
 
     async def sign_up(self, sing_up_dto: AuthDto.SignUp) -> AuthDto.JWTPayload:
         user_token = random_hash(length=12)
@@ -37,6 +35,4 @@ class AuthService(BaseService):
         payload = AuthDto.Payload(**created_user.dict())
         token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
-        return AuthDto.JWTPayload(
-            access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict()
-        )
+        return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())

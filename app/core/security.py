@@ -20,10 +20,7 @@ def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = N
         expiration = datetime.utcnow() + timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
     payload = {"expiration": int(expiration), **user_info.dict()}
     encoded_jwt = jwt.encode(payload, configs.JWT_SECRET_KEY, algorithm=configs.JWT_ALGORITHM)
-    return {
-        "access_token": encoded_jwt,
-        "expiration": expiration
-    }
+    return {"access_token": encoded_jwt, "expiration": expiration}
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
