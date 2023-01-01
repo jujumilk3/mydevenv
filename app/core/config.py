@@ -1,12 +1,19 @@
 import os
 from pathlib import Path
 
+from loguru import logger
+
 
 class BaseConfigs:
     # base
-    ENV: str = os.getenv("ENV", "")
+    ENV: str = "dev"
     APP_ROOT_DIR: str = Path(__file__).parent.parent.parent
     PROJECT_NAME: str = "mydevenv"
+
+    # api addresses
+    API_PREFIX: str = ""  # /api
+    API_V1_STR: str = "/v1"
+    API_V2_STR: str = "/v2"
 
     # auth
     JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "mydevenv")
@@ -14,9 +21,9 @@ class BaseConfigs:
     JWT_ACCESS_EXPIRE: int = 60 * 60 * 24 * 7  # 7 days
     JWT_REFRESH_EXPIRE: int = 60 * 60 * 24 * 30  # 30 days
 
-    # internal addressed
-    API_V1_STR: str = "/v1"
-    API_V2_STR: str = "/v2"
+    # date
+    DATETIME_FORMAT: str = "%Y-%m-%dT%H:%M:%S"
+    DATE_FORMAT: str = "%Y-%m-%d"
 
     # cors
     BACKEND_CORS_ORIGINS: list[str] = ["*"]
@@ -58,5 +65,5 @@ elif ENV == "dev":
 elif ENV == "test":
     configs = TestConfigs()
 else:
-    print("ENV is not set.")
+    logger.info("ENV is not set. Use BaseConfigs.")
     configs = BaseConfigs()

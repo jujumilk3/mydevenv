@@ -8,6 +8,19 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.3.1
+    hooks:
+      - id: pyupgrade
+        args:
+          - --py310-plus
+          - --keep-runtime-typing
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.205
+    hooks:
+      - id: ruff
+        args:
+          - --fix
   - repo: https://github.com/psf/black
     rev: 22.12.0
     hooks:
@@ -21,10 +34,6 @@ repos:
         args:
           - --profile=black
           - --line-length=120
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
-    hooks:
-      - id: pyupgrade
 ci:
   autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks
   autoupdate_commit_msg: ⬆ [pre-commit.ci] pre-commit autoupdate
