@@ -12,6 +12,7 @@ fix_test_dict = dict()
 fix_test_list = list()
 fix_test_tuple = tuple()
 fix_test_set = set()
+fix_test_dict["test"] = "test"
 y = {
     "a": 1,
     "b": 2,
