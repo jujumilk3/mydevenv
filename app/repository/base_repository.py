@@ -1,5 +1,5 @@
+from collections.abc import Callable
 from contextlib import AbstractContextManager
-from typing import Callable
 
 from pydantic import BaseModel
 from sqlalchemy import select
