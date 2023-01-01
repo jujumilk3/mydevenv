@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from sqlalchemy.sql.schema import UniqueConstraint
 from sqlmodel import Field
 
-from app.model.base_model import CustomBaseModel, AllOptional
+from app.model.base_model import AllOptional, CustomBaseModel
 
 
 class User(CustomBaseModel, table=True):
