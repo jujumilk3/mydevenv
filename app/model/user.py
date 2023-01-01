@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from sqlalchemy.sql.schema import UniqueConstraint
 from sqlmodel import Field
 
-from app.models.base_model import CustomBaseModel
+from app.model.base_model import CustomBaseModel, AllOptional
 
 
 class User(CustomBaseModel, table=True):
@@ -20,12 +20,32 @@ class User(CustomBaseModel, table=True):
     is_activated: bool = Field(default=False, nullable=False)
 
 
-class JWTPayload(BaseModel):
-    user_token: str
-    is_authenticated: bool
-    is_verified: bool
-    channel: str
-    exp: int
+class AuthDto:
+    class JWTPayload(BaseModel):
+        email: str
+        nickname: str
+        user_token: str
+        is_verified: bool
+        is_activated: bool
 
-    class Config:
-        orm_mode = True
+        class Config:
+            orm_mode = True
+
+    class SignUp(BaseModel):
+        email: str
+        password: str
+        nickname: str
+
+    class SignIn(BaseModel):
+        email: str
+        password: str
+
+
+class UserDto:
+    class Base(BaseModel):
+        email: str
+        password: str
+        nickname: str
+        user_token: str
+        is_verified: bool
+        is_activated: bool

@@ -1,6 +1,6 @@
 from sqlmodel import Field
 
-from app.models.base_model import CustomBaseModel
+from app.model.base_model import CustomBaseModel
 
 
 class CategoryTag(CustomBaseModel, table=True):

@@ -7,7 +7,7 @@ from passlib.context import CryptContext
 from pydantic import BaseModel
 
 from app.core.config import configs
-from app.models.user import JWTPayload
+from app.model.user import AuthDto
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

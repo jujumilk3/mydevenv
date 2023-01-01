@@ -1,7 +1,7 @@
 from sqlmodel import Column, Field
 
-from app.core.constants import ContentType
-from app.models.base_model import CustomBaseModel, JsonType
+from app.core.constant import ContentType
+from app.model.base_model import CustomBaseModel, JsonType
 
 
 class Comment(CustomBaseModel, table=True):
