@@ -18,6 +18,7 @@ class User(CustomBaseModel, table=True):
     user_token: str = Field(nullable=False)
     is_verified: bool = Field(default=False, nullable=False)
     is_activated: bool = Field(default=False, nullable=False)
+    is_superuser: bool = Field(default=False, nullable=False)
 
 
 class AuthDto:
@@ -49,3 +50,4 @@ class UserDto:
         user_token: str
         is_verified: bool
         is_activated: bool
+        is_superuser: bool

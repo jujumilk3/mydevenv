@@ -3,11 +3,11 @@ from typing import Callable
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.model.user import User
+from app.model.category import Category
 from app.repository.base_repository import BaseRepository
 
 
-class UserRepository(BaseRepository):
+class CategoryRepository(BaseRepository):
     def __init__(self, session_factory: Callable[..., AbstractContextManager[AsyncSession]]):
         self.session_factory = session_factory
-        super().__init__(session_factory, User)
+        super().__init__(session_factory, Category)

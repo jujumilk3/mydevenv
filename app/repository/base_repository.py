@@ -39,7 +39,7 @@ class BaseRepository:
                 await session.commit()
                 await session.refresh(query)
             except IntegrityError as e:
-                raise DuplicatedError(detail=str(e.orig))
+                raise DuplicatedError(detail=str(e.orig)) from e
             return query
 
     async def update(self, model_id: int, dto: BaseModel):
@@ -53,12 +53,11 @@ class BaseRepository:
             return found_model
 
     async def upsert(self, model_id: int, dto: BaseModel):
-        async with self.session_factory() as session:
-            try:
-                found_model = await self.select_by_id(model_id)
-            except NotFoundError:
-                return await self.insert(dto)
-            return self.update(model_id=model_id, dto=dto)
+        try:
+            await self.select_by_id(model_id)
+        except NotFoundError:
+            return await self.insert(dto)
+        return self.update(model_id=model_id, dto=dto)
 
     async def delete_by_id(self, model_id: int):
         async with self.session_factory() as session:
