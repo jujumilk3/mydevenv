@@ -9,6 +9,7 @@ class BaseConfigs:
     PROJECT_NAME: str = "mydevenv"
 
     # api addresses
+    API_PREFIX: str = ""  # /api
     API_V1_STR: str = "/v1"
     API_V2_STR: str = "/v2"
 

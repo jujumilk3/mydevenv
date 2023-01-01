@@ -1,21 +1,43 @@
 from fastapi import FastAPI
+from starlette import status
+from starlette.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+from app.core.config import configs
+from app.core.container import Container
+from loguru import logger
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+def create_app(v1_routers=None):
+    _app = FastAPI(
+        title=configs.PROJECT_NAME,
+        docs_url=f"{configs.API_PREFIX}/docs",
+        redoc_url=f"{configs.API_PREFIX}/redoc",
+        openapi_url=f"{configs.API_PREFIX}/openapi.json",
+        version="0.0.1",
+    )
+
+    # set db and container
+    container = Container()
+    _app.db = container.db()
+
+    # set cors
+    if configs.BACKEND_CORS_ORIGINS:
+        _app.add_middleware(
+            CORSMiddleware,
+            allow_origins=[str(origin) for origin in configs.BACKEND_CORS_ORIGINS],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
+    # set routes
+    @_app.get(f"{configs.API_PREFIX}/healthcheck", status_code=status.HTTP_200_OK)
+    def root():
+        return "OK"
+
+    _app.include_router(v1_routers, prefix=configs.API_V1_STR)
+    logger.info(f"app created. Its ENV_NAME: {configs.ENV_NAME}")
+    return _app
 
 
-fix_test_dict = {}
-fix_test_list = []
-fix_test_tuple = ()
-fix_test_set = set()
-fix_test_dict["test"] = "test"
-y = {
-    "a": 1,
-    "b": 2,
-}
-test = {a: b for a, b in y}
-test2 = "{}" "{}".format(1, 2)
+app = create_app()
