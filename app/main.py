@@ -8,7 +8,13 @@ def read_root():
     return {"Hello": "World"}
 
 
-fix_test_dict = dict()
-fix_test_list = list()
-fix_test_tuple = tuple()
-fix_test_set = set()
+fix_test_dict = dict(())
+fix_test_list = list(())
+fix_test_tuple = tuple(())
+fix_test_set = set(())
+y = {
+    "a": 1,
+    "b": 2,
+}
+test = dict((a, b) for a, b in y)
+test2 = '{0}' '{1}'.format(1, 2)
