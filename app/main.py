@@ -8,9 +8,9 @@ def read_root():
     return {"Hello": "World"}
 
 
-fix_test_dict = dict()
-fix_test_list = list()
-fix_test_tuple = tuple()
+fix_test_dict = {}
+fix_test_list = []
+fix_test_tuple = ()
 fix_test_set = set()
 fix_test_dict["test"] = "test"
 y = {
