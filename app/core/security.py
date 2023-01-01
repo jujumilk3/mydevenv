@@ -13,16 +13,16 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
 
 
-def create_access_token(subject: AuthDto.Payload, expires_delta: timedelta = None) -> (str, str):
+def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = None) -> (str, str):
     if expires_delta:
-        expiration = datetime.utcnow() + expires_delta
+        expiration = (datetime.utcnow() + expires_delta).timestamp()
     else:
         expiration = datetime.utcnow() + timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
-    payload = {"expiration": expiration, **subject}
+    payload = {"expiration": int(expiration), **user_info.dict()}
     encoded_jwt = jwt.encode(payload, configs.JWT_SECRET_KEY, algorithm=configs.JWT_ALGORITHM)
     return {
         "access_token": encoded_jwt,
-        "expiration": expiration,
+        "expiration": expiration
     }
 
 
