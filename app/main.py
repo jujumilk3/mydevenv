@@ -1,10 +1,10 @@
 from fastapi import FastAPI
+from loguru import logger
 from starlette import status
 from starlette.middleware.cors import CORSMiddleware
 
 from app.core.config import configs
 from app.core.container import Container
-from loguru import logger
 
 
 def create_app(v1_routers=None):
