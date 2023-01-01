@@ -1,12 +1,10 @@
 from datetime import timedelta
-from typing import List
 
 from app.core.config import configs
 from app.core.exception import AuthError
 from app.core.security import create_access_token, get_password_hash, verify_password
-from app.model.user import User
+from app.model.user import AuthDto, User
 from app.repository.user_repository import UserRepository
-from app.model.user import AuthDto
 from app.service.base_service import BaseService
 from app.utils.common import random_hash
 
@@ -18,7 +16,7 @@ class AuthService(BaseService):
 
     def sign_in(self, sign_in_dto: AuthDto.SignIn):
         find_user.email__eq = sign_in_dto.email
-        user: List[User] = self.user_repository.read_by_options(find_user)["founds"]
+        user: list[User] = self.user_repository.read_by_options(find_user)["founds"]
         if len(user) < 1:
             raise AuthError(detail="Incorrect email or password")
         found_user = user[0]

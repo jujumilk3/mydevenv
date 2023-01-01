@@ -21,4 +21,3 @@ class Container(containers.DeclarativeContainer):
     tool_repository = providers.Factory(ToolRepository, session_factory=db.provided.session)
     comment_repository = providers.Factory(CommentRepository, session_factory=db.provided.session)
     category_repository = providers.Factory(CategoryRepository, session_factory=db.provided.session)
-

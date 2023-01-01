@@ -1,4 +1,4 @@
-from app.utils.common import random_hash, is_json
+from app.utils.common import is_json, random_hash
 
 
 def test_random_hash():
