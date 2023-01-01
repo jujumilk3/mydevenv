@@ -2,14 +2,14 @@ from dependency_injector import containers, providers
 
 from app.core.config import configs
 from app.core.database import Database
+from app.repository.category_repository import CategoryRepository
+from app.repository.comment_repository import CommentRepository
 from app.repository.like_repository import LikeRepository
 from app.repository.tool_repository import ToolRepository
-from app.repository.comment_repository import CommentRepository
-from app.repository.category_repository import CategoryRepository
 from app.repository.user_repository import UserRepository
-from app.service.integrated_service.auth_service import AuthService
 from app.service.category_service import CategoryService
 from app.service.comment_service import CommentService
+from app.service.integrated_service.auth_service import AuthService
 from app.service.like_service import LikeService
 from app.service.tool_service import ToolService
 from app.service.user_service import UserService
