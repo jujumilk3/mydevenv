@@ -1,6 +1,6 @@
+import json
 import random
 import string
-import json
 
 
 def is_json(json_to_check: bytes):
@@ -12,7 +12,7 @@ def is_json(json_to_check: bytes):
 
 
 def random_hash(length):
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+    return "".join(random.choices(string.ascii_letters + string.digits, k=length))
 
 
 if __name__ == "__main__":
