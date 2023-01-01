@@ -27,6 +27,7 @@ isort = "^5.11.4"
 pytest-mock = "^3.10.0"
 pytest-asyncio = "^0.20.3"
 aiosqlite = "^0.18.0"
+ruff = "^0.0.205"
 
 [build-system]
 requires = ["poetry-core"]
@@ -39,6 +40,17 @@ include = '\.pyi?$'
 [tool.isort]
 line_length = 120
 profile = 'black'
+
+[tool.ruff]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "C4",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+target-version = "py310"
+line-length = 120
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
