@@ -8,9 +8,15 @@ class BaseConfigs:
     APP_ROOT_DIR: str = Path(__file__).parent.parent.parent
     PROJECT_NAME: str = "mydevenv"
 
+    # auth
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "mydevenv")
+    JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM", "HS256")
+    JWT_ACCESS_EXPIRE: int = 60 * 60 * 24 * 7  # 7 days
+    JWT_REFRESH_EXPIRE: int = 60 * 60 * 24 * 30  # 30 days
+
     # internal addressed
-    API_V1_STR: str = f"/v1"
-    API_V2_STR: str = f"/v2"
+    API_V1_STR: str = "/v1"
+    API_V2_STR: str = "/v2"
 
     # cors
     BACKEND_CORS_ORIGINS: list[str] = ["*"]
