@@ -2,7 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
       - id: check-toml
       - id: check-yaml
@@ -16,7 +16,7 @@ repos:
           - --py310-plus
           - --keep-runtime-typing
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.205
+    rev: v0.0.206
     hooks:
       - id: ruff
         args:
