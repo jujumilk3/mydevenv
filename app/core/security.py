@@ -33,8 +33,6 @@ def get_password_hash(password: str) -> str:
 def decode_jwt(token: str) -> dict:
     try:
         decoded_token = jwt.decode(token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
-        print(decoded_token)
-        # TODO: expiration을 상수로 바꾸기
         return decoded_token if decoded_token["expiration"] >= int(round(datetime.utcnow().timestamp())) else None
     except Exception:
         return {}
@@ -58,9 +56,7 @@ class JWTBearer(HTTPBearer):
     def verify_jwt(self, jwt_token: str) -> bool:
         is_token_valid: bool = False
         try:
-            print("verify_jwt")
             payload = decode_jwt(jwt_token)
-            print(payload)
         except Exception:
             payload = None
         if payload:

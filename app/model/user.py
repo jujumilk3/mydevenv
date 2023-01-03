@@ -50,8 +50,8 @@ class AuthDto:
         nickname: str = Field(nullable=False, example="testnickname")
 
     class SignIn(BaseModel):
-        email: str
-        password: str
+        email: str = Field(nullable=False, example="test@test.com")
+        password: str = Field(nullable=False, example="test1234")
 
     class SignInResponse(BaseModel):
         access_token: str
