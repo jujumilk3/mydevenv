@@ -19,8 +19,8 @@ async def get_current_user(
     try:
         payload = jwt.decode(token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
         token_data = AuthDto.Payload(**payload)
-    except (jwt.JWTError, ValidationError):
-        raise AuthError(detail="Could not validate credentials")
+    except (jwt.JWTError, ValidationError) as e:
+        raise AuthError(detail="Could not validate credentials") from e
     current_user: User = await user_service.get_user_by_user_token(token_data.user_token)
     if not current_user:
         raise AuthError(detail="User not found")
