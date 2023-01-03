@@ -7,8 +7,7 @@ from app.core.config import configs
 from app.core.container import Container
 from app.core.exception import AuthError
 from app.core.security import JWTBearer
-from app.model.user import User
-from app.model.user import AuthDto
+from app.model.user import AuthDto, User
 from app.service.user_service import UserService
 
 
