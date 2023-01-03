@@ -1,10 +1,10 @@
 from asyncio import current_task
 from typing import Any
-from sqlmodel import SQLModel
 
 from sqlalchemy import create_engine, orm
 from sqlalchemy.ext.asyncio import AsyncSession, async_scoped_session, create_async_engine
 from sqlalchemy.ext.declarative import as_declarative, declarative_base, declared_attr
+from sqlmodel import SQLModel
 
 from app.core.config import configs
 
