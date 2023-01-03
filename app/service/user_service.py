@@ -7,5 +7,8 @@ class UserService(BaseService):
         self.user_repository = user_repository
         super().__init__(user_repository)
 
-    async def select_user_by_email(self, email: str):
+    async def get_user_by_email(self, email: str):
         return await self.user_repository.select_user_by_email(email)
+
+    async def get_user_by_user_token(self, user_token: str):
+        return await self.user_repository.select_user_by_user_token(user_token)

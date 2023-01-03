@@ -17,7 +17,7 @@ class User(CustomBaseModel, table=True):
     nickname: str = ModelField(nullable=False)
     user_token: str = ModelField(nullable=False)
     is_verified: bool = ModelField(default=False, nullable=False)
-    is_activated: bool = ModelField(default=False, nullable=False)
+    is_activated: bool = ModelField(default=True, nullable=False)
     is_superuser: bool = ModelField(default=False, nullable=False)
 
 
@@ -50,8 +50,8 @@ class AuthDto:
         nickname: str = Field(nullable=False, example="testnickname")
 
     class SignIn(BaseModel):
-        email: str
-        password: str
+        email: str = Field(nullable=False, example="test@test.com")
+        password: str = Field(nullable=False, example="test1234")
 
     class SignInResponse(BaseModel):
         access_token: str

@@ -10,7 +10,6 @@ from app.core.exception import AuthError
 from app.model.user import AuthDto
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-ALGORITHM = "HS256"
 
 
 def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = None) -> (str, str):
@@ -34,7 +33,7 @@ def get_password_hash(password: str) -> str:
 def decode_jwt(token: str) -> dict:
     try:
         decoded_token = jwt.decode(token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
-        return decoded_token if decoded_token["exp"] >= int(round(datetime.utcnow().timestamp())) else None
+        return decoded_token if decoded_token["expiration"] >= int(round(datetime.utcnow().timestamp())) else None
     except Exception:
         return {}
 

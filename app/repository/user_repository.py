@@ -19,3 +19,10 @@ class UserRepository(BaseRepository):
             query_result = await session.execute(query)
             found_user = query_result.scalar()
             return found_user
+
+    async def select_user_by_user_token(self, user_token: str) -> User:
+        async with self.session_factory() as session:
+            query = select(User).filter(User.user_token == user_token)
+            query_result = await session.execute(query)
+            found_user = query_result.scalar()
+            return found_user
