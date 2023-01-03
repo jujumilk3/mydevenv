@@ -3,7 +3,8 @@ from fastapi import APIRouter, Depends
 from starlette import status
 
 from app.core.container import Container
-from app.model.user import AuthDto, UserDto
+from app.core.dependency import get_current_active_user
+from app.model.user import AuthDto, UserDto, User
 from app.service.integrated_service.auth_service import AuthService
 
 router = APIRouter(
@@ -24,7 +25,7 @@ async def sign_up(user_info: AuthDto.SignUp, auth_service: AuthService = Depends
     return await auth_service.sign_up(user_info)
 
 
-@router.get("/me", response_model=UserDto.Base, status_code=status.HTTP_200_OK)
+@router.get("/me", response_model=User)
 @inject
-async def get_me(user_info: AuthDto.JWTPayload, auth_service: AuthService = Depends(Provide[Container.auth_service])):
-    return await auth_service.get_me(user_info)
+async def get_me(current_user: User = Depends(get_current_active_user)):
+    return current_user
