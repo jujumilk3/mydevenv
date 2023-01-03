@@ -16,8 +16,10 @@ async def get_current_user(
     token: str = Depends(JWTBearer()),
     user_service: UserService = Depends(Provide[Container.user_service]),
 ) -> User:
+    print("get_current_user")
     try:
         payload = jwt.decode(token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
+        print(payload)
         token_data = AuthDto.Payload(**payload)
     except (jwt.JWTError, ValidationError):
         raise AuthError(detail="Could not validate credentials")
@@ -28,6 +30,7 @@ async def get_current_user(
 
 
 def get_current_active_user(current_user: User = Depends(get_current_user)) -> User:
+    print("get_current_active_user")
     if not current_user.is_activated:
         raise AuthError("Inactive user")
     return current_user

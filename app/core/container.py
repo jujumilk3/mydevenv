@@ -21,10 +21,11 @@ class Container(containers.DeclarativeContainer):
             "app.api.v1.endpoint.auth",
             "app.api.v1.endpoint.user",
             "app.core.security",
+            "app.core.dependency",
         ]
     )
 
-    db = providers.Singleton(Database, db_url=configs.DB_URL)
+    db = providers.Singleton(Database, db_url=configs.DB_URL, sync_db_url=configs.SYNC_DB_URL)
 
     user_repository = providers.Factory(UserRepository, session_factory=db.provided.session_factory)
     like_repository = providers.Factory(LikeRepository, session_factory=db.provided.session_factory)

@@ -29,12 +29,14 @@ class BaseConfigs:
     BACKEND_CORS_ORIGINS: list[str] = ["*"]
 
     # database
-    DB_URL = "sqlite+aiosqlite:///:memory:"
+    DB_URL = "sqlite+aiosqlite:///db.sqlite3"
+    SYNC_DB_URL = "sqlite:///db.sqlite3"
 
 
 class TestConfigs(BaseConfigs):
     # base
     ENV: str = "test"
+    DB_URL = "sqlite+aiosqlite:///:memory:"
 
 
 class DevelopConfigs(BaseConfigs):
