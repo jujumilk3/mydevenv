@@ -10,7 +10,6 @@ from app.core.exception import AuthError
 from app.model.user import AuthDto
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-ALGORITHM = "HS256"
 
 
 def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = None) -> (str, str):
