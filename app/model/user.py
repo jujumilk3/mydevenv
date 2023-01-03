@@ -17,7 +17,7 @@ class User(CustomBaseModel, table=True):
     nickname: str = ModelField(nullable=False)
     user_token: str = ModelField(nullable=False)
     is_verified: bool = ModelField(default=False, nullable=False)
-    is_activated: bool = ModelField(default=False, nullable=False)
+    is_activated: bool = ModelField(default=True, nullable=False)
     is_superuser: bool = ModelField(default=False, nullable=False)
 
 
