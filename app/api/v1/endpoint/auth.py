@@ -4,7 +4,7 @@ from starlette import status
 
 from app.core.container import Container
 from app.core.dependency import get_current_active_user
-from app.model.user import AuthDto, UserDto, User
+from app.model.user import AuthDto, User
 from app.service.integrated_service.auth_service import AuthService
 
 router = APIRouter(
