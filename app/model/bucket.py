@@ -36,4 +36,3 @@ class BucketDto:
 
     class UpsertWithUserToken(Base, metaclass=AllOptional):
         user_token: str
-
