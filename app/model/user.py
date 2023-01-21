@@ -15,6 +15,7 @@ class User(CustomBaseModel, table=True):
     email: str = ModelField(nullable=False)
     password: str = ModelField(nullable=False)
     nickname: str = ModelField(nullable=False)
+    profile_image_url: str = ModelField(default="", nullable=False)
     user_token: str = ModelField(nullable=False)
     is_verified: bool = ModelField(default=False, nullable=False)
     is_activated: bool = ModelField(default=True, nullable=False)
@@ -23,9 +24,10 @@ class User(CustomBaseModel, table=True):
 
 class UserDto:
     class Base(BaseModel):
-        email: str
-        nickname: str
-        user_token: str
+        email: str = Field(..., description="user email", example="jujumilk3@gmail.com")
+        nickname: str = Field(..., description="user nickname", example="gyudoza")
+        user_token: str = Field(..., description="user token", example="test_user_token")
+        profile_image_url: str = Field(default="", description="user profile image url", example="https://via.placeholder.com/150")
 
 
 class AuthDto:
