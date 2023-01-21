@@ -33,3 +33,7 @@ class BucketDto:
 
     class Upsert(Base, metaclass=AllOptional):
         ...
+
+    class UpsertWithUserToken(Base, metaclass=AllOptional):
+        user_token: str
+
