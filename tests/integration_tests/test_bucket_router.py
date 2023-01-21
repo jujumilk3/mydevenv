@@ -1,5 +1,6 @@
-from app.model.bucket import BucketDto
 from fastapi import status
+
+from app.model.bucket import BucketDto
 
 
 def test_create_bucket(client):
@@ -21,5 +22,3 @@ def test_create_bucket(client):
     assert response.json()["created_at"]
     assert response.json()["updated_at"]
     assert response.json()["id"]
-
-

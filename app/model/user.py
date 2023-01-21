@@ -27,7 +27,9 @@ class UserDto:
         email: str = Field(..., description="user email", example="jujumilk3@gmail.com")
         nickname: str = Field(..., description="user nickname", example="gyudoza")
         user_token: str = Field(..., description="user token", example="test_user_token")
-        profile_image_url: str = Field(default="", description="user profile image url", example="https://via.placeholder.com/150")
+        profile_image_url: str = Field(
+            default="", description="user profile image url", example="https://via.placeholder.com/150"
+        )
 
 
 class AuthDto:

@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from typing import Optional
 
-from pydantic.main import ModelMetaclass, BaseModel
+from pydantic.main import BaseModel, ModelMetaclass
 from sqlmodel import Column, DateTime, Field, SQLModel, String, TypeDecorator, func
 
 

@@ -1,8 +1,7 @@
+from pydantic import BaseModel, Field
 from sqlmodel import Field as ModelField
 
-from app.model.base_model import CustomBaseModel, AllOptional, ModelBaseInfoDto
-from pydantic import BaseModel, Field
-
+from app.model.base_model import AllOptional, CustomBaseModel, ModelBaseInfoDto
 from app.model.user import UserDto
 
 
@@ -34,4 +33,3 @@ class BucketDto:
 
     class Upsert(Base, metaclass=AllOptional):
         ...
-
