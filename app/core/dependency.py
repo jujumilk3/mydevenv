@@ -42,8 +42,8 @@ async def get_current_user_token_no_exception(
     try:
         decoded = jwt.decode(bearer_token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
         payload = AuthDto.Payload(**decoded)
-    except (jwt.JWTError, ValidationError, AttributeError) as e:
-        return ''
+    except (jwt.JWTError, ValidationError, AttributeError):
+        return ""
     return payload.user_token
 
 

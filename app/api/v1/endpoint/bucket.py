@@ -30,6 +30,4 @@ async def create_bucket(
     bucket_service: BucketService = Depends(Provide[Container.bucket_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    return await bucket_service.add(
-        BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token)
-    )
+    return await bucket_service.add(BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token))
