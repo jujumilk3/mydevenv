@@ -17,9 +17,7 @@ async def get_current_user_token(
     try:
         decoded = jwt.decode(bearer_token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
         payload = AuthDto.Payload(**decoded)
-    except AttributeError as e:
-        raise AuthError(detail=str(e))
-    except (jwt.JWTError, ValidationError) as e:
+    except (jwt.JWTError, ValidationError, AttributeError) as e:
         raise AuthError(detail="Could not validate credentials") from e
     return payload.user_token
 
