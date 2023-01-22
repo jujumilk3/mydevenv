@@ -16,7 +16,7 @@ def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = N
     if expires_delta:
         expiration = (datetime.utcnow() + expires_delta).timestamp()
     else:
-        expiration = datetime.utcnow() + timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
+        expiration = (datetime.utcnow() + timedelta(seconds=configs.JWT_ACCESS_EXPIRE)).timestamp()
     payload = {"expiration": int(expiration), **user_info.dict()}
     encoded_jwt = jwt.encode(payload, configs.JWT_SECRET_KEY, algorithm=configs.JWT_ALGORITHM)
     return {"access_token": encoded_jwt, "expiration": expiration}
@@ -50,7 +50,7 @@ class JWTBearer(HTTPBearer):
             if not self.verify_jwt(credentials.credentials):
                 raise AuthError(detail="Invalid token or expired token.")
             return credentials.credentials
-        else:
+        elif self.auto_error:
             raise AuthError(detail="Invalid authorization code.")
 
     def verify_jwt(self, jwt_token: str) -> bool:

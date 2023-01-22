@@ -6,10 +6,6 @@ on:
       - stage
       - prod
       - hotfix
-  pull_request:
-    branches:
-      - feature/*
-    types: [ opened, synchronize ]
 
 
 jobs:

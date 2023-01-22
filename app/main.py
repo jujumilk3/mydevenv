@@ -3,7 +3,7 @@ from loguru import logger
 from starlette import status
 from starlette.middleware.cors import CORSMiddleware
 
-from app.api.v1.route import router as v1_router
+from app.api.v1.route import routers as v1_router
 from app.core.config import configs
 from app.core.container import Container
 
@@ -19,6 +19,7 @@ def create_app():
 
     # set db and container
     container = Container()
+    _app.container = container
     _app.db = container.db()
 
     # set cors

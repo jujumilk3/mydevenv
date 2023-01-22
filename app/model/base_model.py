@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from typing import Optional
 
-from pydantic.main import ModelMetaclass
+from pydantic.main import BaseModel, ModelMetaclass
 from sqlmodel import Column, DateTime, Field, SQLModel, String, TypeDecorator, func
 
 
@@ -48,3 +48,9 @@ class AllOptional(ModelMetaclass):
                 annotations[field] = Optional[annotations[field]]
         namespaces["__annotations__"] = annotations
         return super().__new__(self, name, bases, namespaces, **kwargs)
+
+
+class ModelBaseInfoDto(BaseModel):
+    id: int
+    created_at: datetime
+    updated_at: datetime

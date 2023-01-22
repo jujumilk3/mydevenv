@@ -11,45 +11,43 @@ from app.model.user import AuthDto, User
 from app.service.user_service import UserService
 
 
-@inject
-async def get_current_user(
-    token: str = Depends(JWTBearer()),
-    user_service: UserService = Depends(Provide[Container.user_service]),
-) -> User:
+async def get_current_user_token(
+    bearer_token: str = Depends(JWTBearer(auto_error=False)),
+) -> str:
     try:
-        payload = jwt.decode(token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
-        token_data = AuthDto.Payload(**payload)
-    except (jwt.JWTError, ValidationError) as e:
+        decoded = jwt.decode(bearer_token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
+        payload = AuthDto.Payload(**decoded)
+    except (jwt.JWTError, ValidationError, AttributeError) as e:
         raise AuthError(detail="Could not validate credentials") from e
-    current_user: User = await user_service.get_user_by_user_token(token_data.user_token)
+    return payload.user_token
+
+
+@inject
+async def get_current_active_user_token(
+    user_token: str = Depends(get_current_user_token),
+    user_service: UserService = Depends(Provide[Container.user_service]),
+) -> str:
+    current_user: User = await user_service.get_user_by_user_token(user_token=user_token)
     if not current_user:
         raise AuthError(detail="User not found")
     current_user.password = "***"
-    return current_user
-
-
-def get_current_active_user(current_user: User = Depends(get_current_user)) -> User:
     if not current_user.is_activated:
         raise AuthError("Inactive user")
-    return current_user
+    return current_user.user_token
 
 
-async def get_current_user_with_no_exception(
-    token: str = Depends(JWTBearer()),
-    user_service: UserService = Depends(Provide[Container.user_service]),
-) -> User | None:
+async def get_current_user_token_no_exception(
+    bearer_token: str = Depends(JWTBearer(auto_error=False)),
+) -> str:
     try:
-        payload = jwt.decode(token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
-        token_data = AuthDto.Payload(**payload)
-    except (jwt.JWTError, ValidationError):
-        return None
-    current_user: User = await user_service.get_user_by_user_token(token_data.user_token)
-    if not current_user:
-        return None
-    return current_user
+        decoded = jwt.decode(bearer_token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
+        payload = AuthDto.Payload(**decoded)
+    except (jwt.JWTError, ValidationError, AttributeError):
+        return ""
+    return payload.user_token
 
 
-def get_current_super_user(current_user: User = Depends(get_current_user)) -> User:
+def get_current_super_user(current_user: User = Depends(get_current_user_token)) -> User:
     if not current_user.is_activated:
         raise AuthError("Inactive user")
     if not current_user.is_superuser:

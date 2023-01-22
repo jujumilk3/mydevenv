@@ -4,7 +4,7 @@ from sqlmodel import Field as ModelField
 from app.model.base_model import CustomBaseModel
 
 
-class BucketItem(CustomBaseModel, table=True):
+class BucketTool(CustomBaseModel, table=True):
     bucket_id: int = ModelField(
         sa_column=Column(Integer, ForeignKey("bucket.id", ondelete="NO ACTION")), nullable=False
     )
