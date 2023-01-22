@@ -156,7 +156,7 @@ def test_bucket_crud_permission_check(client, test_name):
     )
     assert response.status_code == status.HTTP_200_OK
 
-    # update bucket
+    # update bucket without auth
     response = client.patch(
         f"/v1/bucket/{created_bucket_id}",
         json={
@@ -190,7 +190,7 @@ def test_bucket_crud_permission_check(client, test_name):
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["name"] == "test bucket updated"
 
-    # delete bucket
+    # delete bucket without auth
     response = client.delete(
         "/v1/bucket/1",
     )
