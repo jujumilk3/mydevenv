@@ -42,8 +42,11 @@ async def update_bucket(
     user_token: str = Depends(get_current_user_token),
 ):
     return await bucket_service.patch_by_id_after_check_user_token(
-        model_id=bucket_id, dto=BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token), user_token=user_token
+        model_id=bucket_id,
+        dto=BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token),
+        user_token=user_token,
     )
+
 
 @router.delete("/{bucket_id}", status_code=status.HTTP_204_NO_CONTENT)
 @inject

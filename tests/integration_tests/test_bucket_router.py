@@ -1,8 +1,9 @@
+from time import sleep
+
 from fastapi import status
 
 from app.model.bucket import BucketDto
 from tests.utils.bearer_creater import create_bearer_token
-from time import sleep
 
 
 def test_bucket_crud(client, current_test_name):
@@ -108,5 +109,3 @@ def test_bucket_crud(client, current_test_name):
         },
     )
     assert response.status_code == status.HTTP_404_NOT_FOUND
-
-

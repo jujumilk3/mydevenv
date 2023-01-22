@@ -15,9 +15,6 @@ class Bucket(CustomBaseModel, table=True):
     is_published: bool = ModelField(default=True, nullable=False)
 
 
-
-
-
 class BucketDto:
     class Base(BaseModel):
         name: str = Field(default="", nullable=False, example="local dev for python")
