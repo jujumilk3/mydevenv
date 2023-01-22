@@ -62,3 +62,8 @@ async def engine():
         await conn.run_sync(SQLModel.metadata.create_all)
         await insert_default_test_data(conn)
         yield conn
+
+
+@pytest.fixture
+def current_test_name(request):
+    return request.node.name

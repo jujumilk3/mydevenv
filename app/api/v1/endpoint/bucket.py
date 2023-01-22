@@ -41,6 +41,15 @@ async def update_bucket(
     bucket_service: BucketService = Depends(Provide[Container.bucket_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    return await bucket_service.patch(
-        model_id=bucket_id, dto=BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token)
+    return await bucket_service.patch_by_id_after_check_user_token(
+        model_id=bucket_id, dto=BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token), user_token=user_token
     )
+
+@router.delete("/{bucket_id}", status_code=status.HTTP_204_NO_CONTENT)
+@inject
+async def delete_bucket(
+    bucket_id: int,
+    bucket_service: BucketService = Depends(Provide[Container.bucket_service]),
+    user_token: str = Depends(get_current_user_token),
+):
+    await bucket_service.remove_by_id_after_check_user_token(model_id=bucket_id, user_token=user_token)

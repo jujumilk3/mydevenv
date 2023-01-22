@@ -32,4 +32,6 @@ async def get_me(
     user_token: str = Depends(get_current_active_user_token),
     user_service: UserService = Depends(Provide[Container.user_service]),
 ):
-    return await user_service.get_user_by_user_token(user_token=user_token)
+    me: User = await user_service.get_user_by_user_token(user_token=user_token)
+    me.password = "***"
+    return me
