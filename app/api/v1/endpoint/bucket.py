@@ -31,3 +31,16 @@ async def create_bucket(
     user_token: str = Depends(get_current_user_token),
 ):
     return await bucket_service.add(BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token))
+
+
+@router.patch("/{bucket_id}", response_model=BucketDto.WithBaseInfo, status_code=status.HTTP_200_OK)
+@inject
+async def update_bucket(
+    bucket_id: int,
+    bucket_info: BucketDto.Upsert,
+    bucket_service: BucketService = Depends(Provide[Container.bucket_service]),
+    user_token: str = Depends(get_current_user_token),
+):
+    return await bucket_service.patch(
+        model_id=bucket_id, dto=BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token)
+    )
