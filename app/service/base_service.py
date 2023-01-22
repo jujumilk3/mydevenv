@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.core.exception import AuthError
+from app.core.exception import AuthError, ForbiddenError
 
 
 class BaseService:
@@ -24,7 +24,7 @@ class BaseService:
         if found_model.user_token == user_token:
             return await self.patch_by_id(model_id=model_id, dto=dto)
         else:
-            raise AuthError(detail="You are not the owner of this")
+            raise ForbiddenError(detail="You are not the owner of this")
 
     async def upsert(self, model_id: int, dto: BaseModel):
         return await self._repository.upsert(model_id=model_id, dto=dto)
@@ -34,7 +34,7 @@ class BaseService:
         if found_model.user_token == user_token:
             return await self.upsert(model_id=model_id, dto=dto)
         else:
-            raise AuthError(detail="You are not the owner of this")
+            raise ForbiddenError(detail="You are not the owner of this")
 
     async def remove_by_id(self, model_id: int):
         return await self._repository.delete_by_id(model_id=model_id)
@@ -44,7 +44,7 @@ class BaseService:
         if found_model.user_token == user_token:
             return await self.remove_by_id(model_id=model_id)
         else:
-            raise AuthError(detail="You are not the owner of this")
+            raise ForbiddenError(detail="You are not the owner of this")
 
     async def toggle_by_id(self, model_id: int, user_token: str):
         found_model = await self.get_by_id(model_id=model_id)
@@ -58,4 +58,4 @@ class BaseService:
         if found_model.user_token == user_token:
             return await self.remove_by_id(model_id=model_id)
         else:
-            raise AuthError(detail="You are not the owner of this")
+            raise ForbiddenError(detail="You are not the owner of this")

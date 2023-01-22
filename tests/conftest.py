@@ -65,5 +65,5 @@ async def engine():
 
 
 @pytest.fixture
-def current_test_name(request):
+def test_name(request):
     return request.node.name

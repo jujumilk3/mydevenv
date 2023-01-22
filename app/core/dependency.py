@@ -12,11 +12,13 @@ from app.service.user_service import UserService
 
 
 async def get_current_user_token(
-    bearer_token: str = Depends(JWTBearer()),
+    bearer_token: str = Depends(JWTBearer(auto_error=False)),
 ) -> str:
     try:
         decoded = jwt.decode(bearer_token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
         payload = AuthDto.Payload(**decoded)
+    except AttributeError as e:
+        raise AuthError(detail=str(e))
     except (jwt.JWTError, ValidationError) as e:
         raise AuthError(detail="Could not validate credentials") from e
     return payload.user_token
