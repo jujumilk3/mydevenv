@@ -31,7 +31,6 @@ class AuthService(BaseService):
         user_token = random_hash(length=12)
         user = User(**sing_up_dto.dict(exclude_none=True), is_activated=True, is_superuser=False, user_token=user_token)
         user.password = get_password_hash(sing_up_dto.password)
-        print(1)
         created_user = await self.user_repository.insert(user)
         payload = AuthDto.Payload(**created_user.dict())
         token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)

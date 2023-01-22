@@ -50,7 +50,7 @@ class JWTBearer(HTTPBearer):
             if not self.verify_jwt(credentials.credentials):
                 raise AuthError(detail="Invalid token or expired token.")
             return credentials.credentials
-        else:
+        elif self.auto_error:
             raise AuthError(detail="Invalid authorization code.")
 
     def verify_jwt(self, jwt_token: str) -> bool:

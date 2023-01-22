@@ -30,7 +30,7 @@ class Container(containers.DeclarativeContainer):
 
     db = providers.Singleton(Database, db_url=configs.DB_URL, sync_db_url=configs.SYNC_DB_URL)
 
-    bucket_repository = providers.Factory(BucketRepository, sesssion_factory=db.provided.session_factory)
+    bucket_repository = providers.Factory(BucketRepository, session_factory=db.provided.session_factory)
     category_repository = providers.Factory(CategoryRepository, session_factory=db.provided.session_factory)
     comment_repository = providers.Factory(CommentRepository, session_factory=db.provided.session_factory)
     user_repository = providers.Factory(UserRepository, session_factory=db.provided.session_factory)
