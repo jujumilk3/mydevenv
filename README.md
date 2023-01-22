@@ -78,6 +78,8 @@ React               <-- ToolTag
 예를 들어 Budibase같은 경우 LowCodePlatform이지만 그 자체로도 Tool이고,  
 React또한 Javascript로 작성된 FrontendFrameworkd이자 그 자체로도 Tool의 범주에 포함될 수 있음.
 
+그와중에 React로 작성된 다른 Tool이 있는데(예: Pynecone) React는 또 Javascript로 작성된 Tool이자 Framework이기도 하여 Tool의 범주에도 들어가고, ToolTag의 범주에도 들어가게 됨.
+
 
 그러니까 결국 `Tool` N:N `ToolTag`로 완전히 표현할 수가 없고  
 `Tool`이 자기 자신을 N으로 재귀참조하는 형태의 자료구조가 돼야한다.
