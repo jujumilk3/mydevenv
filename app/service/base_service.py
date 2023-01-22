@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.core.exception import AuthError, ForbiddenError
+from app.core.exception import ForbiddenError
 
 
 class BaseService:
