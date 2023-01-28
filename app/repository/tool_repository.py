@@ -3,7 +3,7 @@ from contextlib import AbstractContextManager
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.model.tool import Tool, ToolTag, ToolToolRelation, ToolTagRelation
+from app.model.tool import Tool, ToolTag, ToolTagRelation, ToolToolRelation
 from app.repository.base_repository import BaseRepository
 
 

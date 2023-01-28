@@ -1,4 +1,4 @@
-from app.service.tool_service import ToolService, ToolTagService, ToolToolRelationService, ToolTagRelationService
+from app.service.tool_service import ToolService, ToolTagRelationService, ToolTagService, ToolToolRelationService
 
 
 class ToolIntegratedService:
