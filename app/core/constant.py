@@ -10,7 +10,7 @@ class ContentType(str, Enum):
         return str(self.value)
 
 
-class CategoryGroup(str, Enum):
+class TagCategoryType(str, Enum):
     TOOL = "tool"
     POST = "post"
 

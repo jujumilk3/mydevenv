@@ -1,10 +1,10 @@
-from dependency_injector.wiring import Provide, inject
+from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
-from app.core.dependency import get_current_active_user_token
+from app.core.dependency import get_current_super_user
 from app.model.user import User
-from app.service.user_service import UserService
+from app.service.integrated_service.tool_integrated_service import ToolIntegratedService
 
 router = APIRouter(
     prefix="/admin",
@@ -15,9 +15,15 @@ router = APIRouter(
 @router.get("/check")
 @inject
 async def check_admin(
-    user_token: str = Depends(get_current_active_user_token),
-    user_service: UserService = Depends(Provide[Container.user_service]),
+    user: User = Depends(get_current_super_user),
 ):
-    print(user_token)
-    user: User = await user_service.get_user_by_user_token(user_token)
+    return {"is_admin": user.is_superuser}
+
+
+@router.post("/register/tool")
+@inject
+async def register_tool(
+    user: User = Depends(get_current_super_user),
+    tool_integrated_service: ToolIntegratedService = Depends(Provide[Container.tool_integrated_service]),
+):
     return {"is_admin": user.is_superuser}

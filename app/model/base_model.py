@@ -15,6 +15,11 @@ class CustomBaseModel(SQLModel):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
+class CustomBaseModelDto(BaseModel):
+    class Config:
+        orm_mode = True
+
+
 class JsonType(TypeDecorator):
     impl = String
 

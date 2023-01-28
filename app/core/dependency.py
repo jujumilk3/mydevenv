@@ -5,7 +5,7 @@ from pydantic import ValidationError
 
 from app.core.config import configs
 from app.core.container import Container
-from app.core.exception import AuthError
+from app.core.exception import AuthError, ForbiddenError
 from app.core.security import JWTBearer
 from app.model.user import AuthDto, User
 from app.service.user_service import UserService
@@ -56,5 +56,5 @@ async def get_current_super_user(
     if not current_user.is_activated:
         raise AuthError("Inactive user")
     if not current_user.is_superuser:
-        raise AuthError("It's not a super user")
+        raise ForbiddenError("It's not a super user")
     return current_user

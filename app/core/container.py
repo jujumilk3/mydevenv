@@ -9,7 +9,6 @@ from app.repository.like_repository import LikeRepository
 from app.repository.tool_repository import (
     ToolRepository,
     ToolTagRelationRepository,
-    ToolTagRepository,
     ToolToolRelationRepository,
 )
 from app.repository.user_repository import UserRepository
@@ -17,8 +16,9 @@ from app.service.auth_service import AuthService
 from app.service.bucket_service import BucketService
 from app.service.category_service import CategoryService
 from app.service.comment_service import CommentService
+from app.service.integrated_service.tool_integrated_service import ToolIntegratedService
 from app.service.like_service import LikeService
-from app.service.tool_service import ToolService, ToolTagRelationService, ToolTagService, ToolToolRelationService
+from app.service.tool_service import ToolService, ToolTagRelationService, ToolToolRelationService
 from app.service.user_service import UserService
 
 
@@ -43,7 +43,6 @@ class Container(containers.DeclarativeContainer):
     user_repository = providers.Factory(UserRepository, session_factory=db.provided.session_factory)
     like_repository = providers.Factory(LikeRepository, session_factory=db.provided.session_factory)
     tool_repository = providers.Factory(ToolRepository, session_factory=db.provided.session_factory)
-    tool_tag_repository = providers.Factory(ToolTagRepository, session_factory=db.provided.session_factory)
     tool_tool_relation_repository = providers.Factory(
         ToolToolRelationRepository, session_factory=db.provided.session_factory
     )
@@ -59,7 +58,6 @@ class Container(containers.DeclarativeContainer):
     user_service = providers.Factory(UserService, user_repository=user_repository)
     like_service = providers.Factory(LikeService, like_repository=like_repository)
     tool_service = providers.Factory(ToolService, tool_repository=tool_repository)
-    tool_tag_service = providers.Factory(ToolTagService, tool_tag_repository=tool_tag_repository)
     tool_tool_relation_service = providers.Factory(
         ToolToolRelationService, tool_tool_relation_repository=tool_tool_relation_repository
     )
@@ -68,10 +66,9 @@ class Container(containers.DeclarativeContainer):
     )
 
     # Integrated Service
-    integrated_tool_service = providers.Factory(
-        ToolService,
+    tool_integrated_service = providers.Factory(
+        ToolIntegratedService,
         tool_repository=tool_repository,
-        tool_tag_repository=tool_tag_repository,
         tool_tool_relation_repository=tool_tool_relation_repository,
         tool_tag_relation_repository=tool_tag_relation_repository,
     )

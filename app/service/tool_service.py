@@ -8,12 +8,6 @@ class ToolService(BaseService):
         super().__init__(tool_repository)
 
 
-class ToolTagService(BaseService):
-    def __init__(self, tool_tag_repository: ToolRepository):
-        self.tool_tag_repository = tool_tag_repository
-        super().__init__(tool_tag_repository)
-
-
 class ToolToolRelationService(BaseService):
     def __init__(self, tool_tool_relation_repository: ToolRepository):
         self.tool_tool_relation_repository = tool_tool_relation_repository

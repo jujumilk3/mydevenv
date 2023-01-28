@@ -1,6 +1,7 @@
+from pydantic import Field
 from sqlmodel import Field as ModelField
 
-from app.model.base_model import CustomBaseModel
+from app.model.base_model import CustomBaseModel, CustomBaseModelDto, AllOptional
 
 
 class Tool(CustomBaseModel, table=True):
@@ -12,11 +13,6 @@ class Tool(CustomBaseModel, table=True):
     github_url: str = ModelField(default="", nullable=False)
 
 
-class ToolTag(CustomBaseModel, table=True):
-    name: str = ModelField(default="", nullable=False)
-    description: str = ModelField(default="", nullable=False)
-
-
 class ToolToolRelation(CustomBaseModel, table=True):
     source_tool_id: int = ModelField(nullable=False)
     reference_tool_id: int = ModelField(nullable=False)
@@ -25,3 +21,17 @@ class ToolToolRelation(CustomBaseModel, table=True):
 class ToolTagRelation(CustomBaseModel, table=True):
     tool_id: int = ModelField(nullable=False)
     tag_id: int = ModelField(nullable=False)
+
+
+class ToolDto:
+    class Base(CustomBaseModelDto):
+        display_name: str = Field(..., description="tool display name", example="test tool")
+        manage_name: str = Field(..., description="tool manage name", example="test_tool")
+        image_url: str = Field(..., description="tool image url", example="https://via.placeholder.com/150")
+        is_open_source: bool = Field(..., description="tool is open source", example=True)
+        site_url: str = Field(..., description="tool site url", example="https://github.com")
+        github_url: str = Field(..., description="tool github url", example="https://github.com/jujumilk3/mydevenv")
+
+    class Upsert(Base, metaclass=AllOptional):
+        tool_ids: list[int] = Field(..., description="tool ids", example=[1, 2, 3])
+        tool_tag_ids: list[int] = Field(..., description="tool tag ids", example=[1, 2, 3])

@@ -65,10 +65,23 @@ async def insert_default_test_data(conn):
             session.add(created_user)
             await session.commit()
 
+        normal_users = read_test_data_from_test_file("user/normal_users.json")
+        for normal_user in normal_users:
+            normal_user_dict = {}
+            for k, v in normal_user.items():
+                normal_user_dict[k] = v
+            created_user = User(**normal_user_dict)
+            session.add(created_user)
+            await session.commit()
+
         # check inserted data
         query = select(User).where(User.is_superuser == True)
         query_results = (await session.execute(query)).scalars().all()
         logger.info(f"Created super user: {len(query_results)}")
+
+        query = select(User).where(User.is_superuser == False)
+        query_results = (await session.execute(query)).scalars().all()
+        logger.info(f"Created normal user: {len(query_results)}")
 
 
 @pytest.fixture

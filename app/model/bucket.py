@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from sqlmodel import Field as ModelField
 
-from app.model.base_model import AllOptional, CustomBaseModel, ModelBaseInfoDto
+from app.model.base_model import AllOptional, CustomBaseModel, ModelBaseInfoDto, CustomBaseModelDto
 from app.model.user import UserDto
 
 
@@ -16,15 +16,12 @@ class Bucket(CustomBaseModel, table=True):
 
 
 class BucketDto:
-    class Base(BaseModel):
+    class Base(CustomBaseModelDto):
         name: str = Field(default="", nullable=False, example="local dev for python")
         path: str = Field(default="", nullable=False, example="local-dev-for-python")
         description: str = Field(default="", nullable=False, example="local dev for python")
         memo: str = Field(default="", nullable=False, example="local dev for python")
         is_published: bool = Field(default=True, nullable=False, example=True)
-
-        class Config:
-            orm_mode = True
 
     class WithBaseInfo(ModelBaseInfoDto, Base, metaclass=AllOptional):
         user_token: str = Field(nullable=False, example="test_user_token")
