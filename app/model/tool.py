@@ -1,7 +1,7 @@
 from pydantic import Field
 from sqlmodel import Field as ModelField
 
-from app.model.base_model import CustomBaseModel, CustomBaseModelDto, AllOptional
+from app.model.base_model import AllOptional, CustomBaseModel, CustomBaseModelDto
 
 
 class Tool(CustomBaseModel, table=True):

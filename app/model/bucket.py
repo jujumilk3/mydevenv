@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 from sqlmodel import Field as ModelField
 
-from app.model.base_model import AllOptional, CustomBaseModel, ModelBaseInfoDto, CustomBaseModelDto
+from app.model.base_model import AllOptional, CustomBaseModel, CustomBaseModelDto, ModelBaseInfoDto
 from app.model.user import UserDto
 
 

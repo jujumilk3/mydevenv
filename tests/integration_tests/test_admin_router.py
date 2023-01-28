@@ -1,5 +1,6 @@
-from tests.utils.common import create_bearer_token
 from fastapi import status
+
+from tests.utils.common import create_bearer_token
 
 
 # users have been inserted from "tests.conftest.insert_default_test_data"

@@ -6,11 +6,7 @@ from app.repository.bucket_repository import BucketRepository
 from app.repository.category_repository import CategoryRepository
 from app.repository.comment_repository import CommentRepository
 from app.repository.like_repository import LikeRepository
-from app.repository.tool_repository import (
-    ToolRepository,
-    ToolTagRelationRepository,
-    ToolToolRelationRepository,
-)
+from app.repository.tool_repository import ToolRepository, ToolTagRelationRepository, ToolToolRelationRepository
 from app.repository.user_repository import UserRepository
 from app.service.auth_service import AuthService
 from app.service.bucket_service import BucketService
