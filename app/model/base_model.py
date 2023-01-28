@@ -20,6 +20,13 @@ class CustomBaseModelDto(BaseModel):
         orm_mode = True
 
 
+class ModelBaseInfoDto(CustomBaseModelDto):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+
+
+
 class JsonType(TypeDecorator):
     impl = String
 
@@ -54,8 +61,3 @@ class AllOptional(ModelMetaclass):
         namespaces["__annotations__"] = annotations
         return super().__new__(self, name, bases, namespaces, **kwargs)
 
-
-class ModelBaseInfoDto(BaseModel):
-    id: int
-    created_at: datetime
-    updated_at: datetime

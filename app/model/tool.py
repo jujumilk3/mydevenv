@@ -34,4 +34,4 @@ class ToolDto:
 
     class Upsert(Base, metaclass=AllOptional):
         tool_ids: list[int] = Field(..., description="tool ids", example=[1, 2, 3])
-        tool_tag_ids: list[int] = Field(..., description="tool tag ids", example=[1, 2, 3])
+        tag_ids: list[int] = Field(..., description="tool tag ids", example=[1, 2, 3])

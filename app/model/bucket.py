@@ -24,7 +24,7 @@ class BucketDto:
         is_published: bool = Field(default=True, nullable=False, example=True)
 
     class WithBaseInfo(ModelBaseInfoDto, Base, metaclass=AllOptional):
-        user_token: str = Field(nullable=False, example="test_user_token")
+        user_token: str = Field(..., description="user token", example="test_user_token")
 
     class WithAdditionalInfo(WithBaseInfo, metaclass=AllOptional):
         like_num: int = Field(default=0, example=0)

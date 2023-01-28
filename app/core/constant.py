@@ -11,6 +11,7 @@ class ContentType(str, Enum):
 
 
 class TagCategoryType(str, Enum):
+    NONE = ""
     TOOL = "tool"
     POST = "post"
 
