@@ -69,7 +69,7 @@ class Container(containers.DeclarativeContainer):
     # Integrated Service
     tool_integrated_service = providers.Factory(
         ToolIntegratedService,
-        tool_repository=tool_repository,
-        tool_tool_relation_repository=tool_tool_relation_repository,
-        tool_tag_relation_repository=tool_tag_relation_repository,
+        tool_service=tool_service,
+        tool_tool_relation_service=tool_tool_relation_service,
+        tool_tag_relation_service=tool_tag_relation_service,
     )

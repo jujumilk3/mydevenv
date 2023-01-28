@@ -16,6 +16,7 @@ router = APIRouter(
 @inject
 async def get_bucket(
     bucket_id: int,
+    *,
     bucket_service: BucketService = Depends(Provide[Container.bucket_service]),
     user_token: str = Depends(get_current_user_token_no_exception),
 ):
@@ -25,24 +26,26 @@ async def get_bucket(
 @router.post("", response_model=BucketDto.WithBaseInfo, status_code=status.HTTP_201_CREATED)
 @inject
 async def create_bucket(
-    bucket_info: BucketDto.Upsert,
+    bucket_upsert: BucketDto.Upsert,
+    *,
     bucket_service: BucketService = Depends(Provide[Container.bucket_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    return await bucket_service.add(BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token))
+    return await bucket_service.add(BucketDto.UpsertWithUserToken(**bucket_upsert.dict(), user_token=user_token))
 
 
 @router.patch("/{bucket_id}", response_model=BucketDto.WithBaseInfo, status_code=status.HTTP_200_OK)
 @inject
 async def update_bucket(
     bucket_id: int,
-    bucket_info: BucketDto.Upsert,
+    bucket_upsert: BucketDto.Upsert,
+    *,
     bucket_service: BucketService = Depends(Provide[Container.bucket_service]),
     user_token: str = Depends(get_current_user_token),
 ):
     return await bucket_service.patch_by_id_after_check_user_token(
         model_id=bucket_id,
-        dto=BucketDto.UpsertWithUserToken(**bucket_info.dict(), user_token=user_token),
+        dto=BucketDto.UpsertWithUserToken(**bucket_upsert.dict(), user_token=user_token),
         user_token=user_token,
     )
 
@@ -51,6 +54,7 @@ async def update_bucket(
 @inject
 async def delete_bucket(
     bucket_id: int,
+    *,
     bucket_service: BucketService = Depends(Provide[Container.bucket_service]),
     user_token: str = Depends(get_current_user_token),
 ):

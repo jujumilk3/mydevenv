@@ -16,6 +16,7 @@ router = APIRouter(
 @inject
 async def get_tag(
     tag_id: int,
+    *,
     tag_service: TagService = Depends(Provide[Container.tag_service]),
     user_token: str = Depends(get_current_user_token_no_exception),
 ):
@@ -25,24 +26,26 @@ async def get_tag(
 @router.post("", response_model=TagDto.WithBaseInfo, status_code=status.HTTP_201_CREATED)
 @inject
 async def create_tag(
-    tag_info: TagDto.Upsert,
+    tag_upsert: TagDto.Upsert,
+        *,
     tag_service: TagService = Depends(Provide[Container.tag_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    return await tag_service.add(TagDto.UpsertWithUserToken(**tag_info.dict(), user_token=user_token))
+    return await tag_service.add(TagDto.UpsertWithUserToken(**tag_upsert.dict(), user_token=user_token))
 
 
 @router.patch("/{tag_id}", response_model=TagDto.WithBaseInfo, status_code=status.HTTP_200_OK)
 @inject
 async def update_tag(
     tag_id: int,
-    tag_info: TagDto.Upsert,
+    tag_upsert: TagDto.Upsert,
+        *,
     tag_service: TagService = Depends(Provide[Container.tag_service]),
     user_token: str = Depends(get_current_user_token),
 ):
     return await tag_service.patch_by_id_after_check_user_token(
         model_id=tag_id,
-        dto=TagDto.UpsertWithUserToken(**tag_info.dict(), user_token=user_token),
+        dto=TagDto.UpsertWithUserToken(**tag_upsert.dict(), user_token=user_token),
         user_token=user_token,
     )
 
@@ -51,6 +54,7 @@ async def update_tag(
 @inject
 async def delete_tag(
     tag_id: int,
+        *,
     tag_service: TagService = Depends(Provide[Container.tag_service]),
     user_token: str = Depends(get_current_user_token),
 ):

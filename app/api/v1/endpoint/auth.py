@@ -15,13 +15,13 @@ router = APIRouter(
 
 @router.post("/sign-in", response_model=AuthDto.JWTPayload, status_code=status.HTTP_200_OK)
 @inject
-async def sign_in(user_info: AuthDto.SignIn, auth_service: AuthService = Depends(Provide[Container.auth_service])):
+async def sign_in(user_info: AuthDto.SignIn, *, auth_service: AuthService = Depends(Provide[Container.auth_service])):
     return await auth_service.sign_in(user_info)
 
 
 @router.post("/sign-up", response_model=AuthDto.JWTPayload, status_code=status.HTTP_201_CREATED)
 @inject
-async def sign_up(user_info: AuthDto.SignUp, auth_service: AuthService = Depends(Provide[Container.auth_service])):
+async def sign_up(user_info: AuthDto.SignUp, *, auth_service: AuthService = Depends(Provide[Container.auth_service])):
     return await auth_service.sign_up(user_info)
 
 
