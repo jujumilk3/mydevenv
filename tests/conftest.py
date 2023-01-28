@@ -6,14 +6,17 @@ import pytest_asyncio
 from loguru import logger
 
 # overwrite ENV and prevent to run pytest from other environments
+from app.model.user import User
+
 os.environ["ENV"] = "test"
 if os.getenv("ENV") not in ["test"]:
     msg = f"ENV is not test, it is {os.getenv('ENV')}"
     pytest.exit(msg)
 
-from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import SQLModel
-from starlette.testclient import TestClient
+from fastapi.testclient import TestClient
 
 from app.main import app
 from tests.utils.common import read_test_data_from_test_file
@@ -51,20 +54,21 @@ def client():
 
 
 async def insert_default_test_data(conn):
-    super_users = read_test_data_from_test_file("user/super_users.json")
-    print(super_users)
     logger.info("Just started insert_default_test_data")
+    async with AsyncSession(conn) as session:
+        super_users = read_test_data_from_test_file("user/super_users.json")
+        for super_user in super_users:
+            super_user_dict = {}
+            for k, v in super_user.items():
+                super_user_dict[k] = v
+            created_user = User(**super_user_dict)
+            session.add(created_user)
+            await session.commit()
 
-
-@pytest.fixture(scope="session")
-async def engine():
-    logger.info("engine fixture started")
-    logger.info(f"engine id: {id(engine)}")
-    _engine = create_async_engine("sqlite+aiosqlite:///:memory:")
-    async with _engine.begin() as conn:
-        await conn.run_sync(SQLModel.metadata.create_all)
-        await insert_default_test_data(conn)
-        yield conn
+        # check inserted data
+        query = select(User).where(User.is_superuser == True)
+        query_results = (await session.execute(query)).scalars().all()
+        logger.info(f"Created super user: {len(query_results)}")
 
 
 @pytest.fixture
