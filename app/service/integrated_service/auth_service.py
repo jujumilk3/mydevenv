@@ -6,7 +6,7 @@ from app.core.security import create_access_token, get_password_hash, verify_pas
 from app.model.user import AuthDto, User
 from app.repository.user_repository import UserRepository
 from app.service.base_service import BaseService
-from app.utils.common import random_hash
+from app.util.common import random_hash
 
 
 class AuthService(BaseService):
