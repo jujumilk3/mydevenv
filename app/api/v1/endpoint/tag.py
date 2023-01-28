@@ -27,7 +27,7 @@ async def get_tag(
 @inject
 async def create_tag(
     tag_upsert: TagDto.Upsert,
-        *,
+    *,
     tag_service: TagService = Depends(Provide[Container.tag_service]),
     user_token: str = Depends(get_current_user_token),
 ):
@@ -39,7 +39,7 @@ async def create_tag(
 async def update_tag(
     tag_id: int,
     tag_upsert: TagDto.Upsert,
-        *,
+    *,
     tag_service: TagService = Depends(Provide[Container.tag_service]),
     user_token: str = Depends(get_current_user_token),
 ):
@@ -54,7 +54,7 @@ async def update_tag(
 @inject
 async def delete_tag(
     tag_id: int,
-        *,
+    *,
     tag_service: TagService = Depends(Provide[Container.tag_service]),
     user_token: str = Depends(get_current_user_token),
 ):

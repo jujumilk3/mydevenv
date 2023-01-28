@@ -65,8 +65,8 @@ def test_register_tool(client, test_name):
             "image_url": "https://www.python.org/static/img/python-logo@2x.png",
             "is_open_source": True,
             "site_url": "https://www.python.org/",
-            "github_url": "https://github.com/python/cpython"
-        }
+            "github_url": "https://github.com/python/cpython",
+        },
     )
 
     assert response.status_code == status.HTTP_201_CREATED
@@ -76,4 +76,3 @@ def test_register_tool(client, test_name):
     assert response.json()["is_open_source"] is True
     assert response.json()["site_url"] == "https://www.python.org/"
     assert response.json()["github_url"] == "https://github.com/python/cpython"
-
