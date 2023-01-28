@@ -3,7 +3,7 @@ from time import sleep
 from fastapi import status
 
 from app.model.bucket import BucketDto
-from tests.utils.bearer_creater import create_bearer_token
+from tests.utils.common import create_bearer_token
 
 
 def test_bucket_crud(client, test_name):

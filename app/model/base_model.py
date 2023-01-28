@@ -15,6 +15,17 @@ class CustomBaseModel(SQLModel):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
+class CustomBaseModelDto(BaseModel):
+    class Config:
+        orm_mode = True
+
+
+class ModelBaseInfoDto(CustomBaseModelDto):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+
+
 class JsonType(TypeDecorator):
     impl = String
 
@@ -48,9 +59,3 @@ class AllOptional(ModelMetaclass):
                 annotations[field] = Optional[annotations[field]]
         namespaces["__annotations__"] = annotations
         return super().__new__(self, name, bases, namespaces, **kwargs)
-
-
-class ModelBaseInfoDto(BaseModel):
-    id: int
-    created_at: datetime
-    updated_at: datetime

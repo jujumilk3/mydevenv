@@ -45,9 +45,6 @@ class AuthDto:
         access_token: str
         expiration: int
 
-        class Config:
-            orm_mode = True
-
     class SignUp(BaseModel):
         email: str = Field(nullable=False, example="test@test.com")
         password: str = Field(nullable=False, example="test1234")
