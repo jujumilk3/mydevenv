@@ -1,11 +1,10 @@
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends
-from starlette import status
+from fastapi import APIRouter, Depends, status
 
 from app.core.container import Container
 from app.core.dependency import get_current_active_user_token
 from app.model.user import AuthDto, User
-from app.service.integrated_service.auth_service import AuthService
+from app.service.auth_service import AuthService
 from app.service.user_service import UserService
 
 router = APIRouter(

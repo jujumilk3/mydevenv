@@ -1,6 +1,5 @@
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends
-from starlette import status
+from fastapi import APIRouter, Depends, status
 
 from app.core.container import Container
 from app.core.dependency import get_current_user_token, get_current_user_token_no_exception

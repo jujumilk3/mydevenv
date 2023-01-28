@@ -12,6 +12,11 @@ class Tool(CustomBaseModel, table=True):
     github_url: str = ModelField(default="", nullable=False)
 
 
+class ToolTag(CustomBaseModel, table=True):
+    name: str = ModelField(default="", nullable=False)
+    description: str = ModelField(default="", nullable=False)
+
+
 class ToolToolRelation(CustomBaseModel, table=True):
     source_tool_id: int = ModelField(nullable=False)
     reference_tool_id: int = ModelField(nullable=False)
@@ -20,8 +25,3 @@ class ToolToolRelation(CustomBaseModel, table=True):
 class ToolTagRelation(CustomBaseModel, table=True):
     tool_id: int = ModelField(nullable=False)
     tag_id: int = ModelField(nullable=False)
-
-
-class ToolTag(CustomBaseModel, table=True):
-    name: str = ModelField(default="", nullable=False)
-    description: str = ModelField(default="", nullable=False)

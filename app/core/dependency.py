@@ -47,7 +47,9 @@ async def get_current_user_token_no_exception(
     return payload.user_token
 
 
-def get_current_super_user(current_user: User = Depends(get_current_user_token)) -> User:
+@inject
+async def get_current_super_user(user_token: str = Depends(get_current_user_token),     user_service: UserService = Depends(Provide[Container.user_service])) -> User:
+    current_user: User = await user_service.get_user_by_user_token(user_token=user_token)
     if not current_user.is_activated:
         raise AuthError("Inactive user")
     if not current_user.is_superuser:
