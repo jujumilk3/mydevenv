@@ -1,3 +1,6 @@
+import json
+
+from app.core.config import configs
 from app.core.security import create_access_token
 from app.model.user import AuthDto
 
@@ -11,3 +14,8 @@ def create_bearer_token(test_user_email: str) -> str:
         )
     )
     return f"Bearer {access_token['access_token']}"
+
+
+def read_test_data_from_test_file(file_path: str) -> dict:
+    with open(f"{configs.TEST_DATA_DIR}/{file_path}", "r") as f:
+        return json.loads(f.read())

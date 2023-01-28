@@ -8,6 +8,7 @@ class BaseConfigs:
     # base
     ENV: str = "dev"
     APP_ROOT_DIR: str = Path(__file__).parent.parent.parent
+    TEST_DATA_DIR: str = os.path.join(APP_ROOT_DIR, "tests", "data")
     PROJECT_NAME: str = "mydevenv"
 
     # api addresses

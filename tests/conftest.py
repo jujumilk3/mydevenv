@@ -6,17 +6,18 @@ import pytest_asyncio
 from loguru import logger
 
 # overwrite ENV and prevent to run pytest from other environments
+os.environ["ENV"] = "test"
+if os.getenv("ENV") not in ["test"]:
+    msg = f"ENV is not test, it is {os.getenv('ENV')}"
+    pytest.exit(msg)
+
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel import SQLModel
 from starlette.testclient import TestClient
 
 from app.main import app
+from tests.utils.common import read_test_data_from_test_file
 from tests.utils.router_for_test import router as basic_router_for_test
-
-os.environ["ENV"] = "test"
-if os.getenv("ENV") not in ["test"]:
-    msg = f"ENV is not test, it is {os.getenv('ENV')}"
-    pytest.exit(msg)
 
 
 @pytest.fixture(scope="session")
@@ -36,6 +37,7 @@ async def simple_fixture():
 async def create_tables(engine):
     async with engine.begin() as conn:
         await conn.run_sync(SQLModel.metadata.create_all)
+        await insert_default_test_data(conn)
 
 
 @pytest.fixture(scope="session")
@@ -49,8 +51,9 @@ def client():
 
 
 async def insert_default_test_data(conn):
+    super_users = read_test_data_from_test_file("user/super_users.json")
+    print(super_users)
     logger.info("Just started insert_default_test_data")
-    pass
 
 
 @pytest.fixture(scope="session")
