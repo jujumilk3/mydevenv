@@ -17,5 +17,5 @@ def create_bearer_token(test_user_email: str) -> str:
 
 
 def read_test_data_from_test_file(file_path: str) -> dict:
-    with open(f"{configs.TEST_DATA_DIR}/{file_path}", "r") as f:
+    with open(f"{configs.TEST_DATA_DIR}/{file_path}") as f:
         return json.loads(f.read())
