@@ -190,5 +190,3 @@ def test_register_tool(client, test_name):
     assert "language" in only_tag_names
     assert "framework" in only_tag_names
     python_tool_id = response.json()["id"]
-
-

@@ -1,4 +1,4 @@
-from app.repository.tool_repository import ToolRepository, ToolToolRelationRepository, ToolTagRelationRepository
+from app.repository.tool_repository import ToolRepository, ToolTagRelationRepository, ToolToolRelationRepository
 from app.service.base_service import BaseService
 
 
@@ -20,7 +20,9 @@ class ToolToolRelationService(BaseService):
         super().__init__(tool_tool_relation_repository)
 
     async def create_with_source_tool_id_target_tool_id(self, source_tool_id: int, target_tool_id: int):
-        return await self.tool_tool_relation_repository.insert_with_source_tool_id_target_tool_id(source_tool_id=source_tool_id, target_tool_id=target_tool_id)
+        return await self.tool_tool_relation_repository.insert_with_source_tool_id_target_tool_id(
+            source_tool_id=source_tool_id, target_tool_id=target_tool_id
+        )
 
 
 class ToolTagRelationService(BaseService):
@@ -30,4 +32,3 @@ class ToolTagRelationService(BaseService):
 
     async def create_with_tool_id_tag_id(self, tool_id: int, tag_id: int):
         return await self.tool_tag_relation_repository.insert_with_tool_id_tag_id(tool_id=tool_id, tag_id=tag_id)
-

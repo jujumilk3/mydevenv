@@ -34,8 +34,12 @@ class ToolDto:
         github_url: str = Field(..., description="tool github url", example="https://github.com/jujumilk3/mydevenv")
 
     class Upsert(Base, metaclass=AllOptional):
-        tool_names: list[str] | None = Field(None, description="tool names", example=["python", "javascript", "node.js"])
-        tag_names: list[str] | None = Field(None, description="tool tag names", example=["language", "framework", "library"])
+        tool_names: list[str] | None = Field(
+            None, description="tool names", example=["python", "javascript", "node.js"]
+        )
+        tag_names: list[str] | None = Field(
+            None, description="tool tag names", example=["language", "framework", "library"]
+        )
 
     class WithBaseInfo(ModelBaseInfoDto, Base, metaclass=AllOptional):
         ...
