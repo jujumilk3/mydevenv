@@ -1,8 +1,5 @@
-from time import sleep
-
 from fastapi import status
 
-from app.model.tag import TagDto
 from tests.utils.common import create_bearer_token
 
 
@@ -94,4 +91,3 @@ def test_tag_crud(client, test_name):
         },
     )
     assert response.status_code == status.HTTP_201_CREATED
-

@@ -26,7 +26,6 @@ class ModelBaseInfoDto(CustomBaseModelDto):
     updated_at: datetime
 
 
-
 class JsonType(TypeDecorator):
     impl = String
 
@@ -60,4 +59,3 @@ class AllOptional(ModelMetaclass):
                 annotations[field] = Optional[annotations[field]]
         namespaces["__annotations__"] = annotations
         return super().__new__(self, name, bases, namespaces, **kwargs)
-
