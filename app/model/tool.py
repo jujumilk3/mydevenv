@@ -1,7 +1,7 @@
 from pydantic import Field
 from sqlmodel import Field as ModelField
 
-from app.model.base_model import AllOptional, CustomBaseModel, CustomBaseModelDto
+from app.model.base_model import AllOptional, CustomBaseModel, CustomBaseModelDto, ModelBaseInfoDto
 from app.model.tag import TagDto
 
 
@@ -34,11 +34,36 @@ class ToolDto:
         github_url: str = Field(..., description="tool github url", example="https://github.com/jujumilk3/mydevenv")
 
     class Upsert(Base, metaclass=AllOptional):
-        tool_ids: list[int] | None = Field(None, description="tool ids", example=[1, 2, 3])
-        tag_ids: list[int] | None = Field(None, description="tool tag ids", example=[1, 2, 3])
+        tool_names: list[str] | None = Field(None, description="tool names", example=["python", "javascript", "node.js"])
+        tag_names: list[str] | None = Field(None, description="tool tag names", example=["language", "framework", "library"])
 
-    class WithAdditionalInfo(Base, metaclass=AllOptional):
+    class WithBaseInfo(ModelBaseInfoDto, Base, metaclass=AllOptional):
+        ...
+
+    class WithAdditionalInfo(WithBaseInfo, metaclass=AllOptional):
         tools: list["ToolDto.WithAdditionalInfo"] | None = Field(None, description="tools", example=[])
         tags: list[TagDto.WithAdditionalInfo] | None = Field(None, description="tags", example=[])
         like_num: int = Field(default=0, example=0)
         is_liked: bool = Field(default=False, example=False)
+
+
+ToolDto.WithAdditionalInfo.update_forward_refs()
+TagDto.WithAdditionalInfo.update_forward_refs()
+
+
+class ToolToolRelationDto:
+    class Base(CustomBaseModelDto):
+        source_tool_id: int = Field(..., description="source tool id", example=1)
+        reference_tool_id: int = Field(..., description="reference tool id", example=2)
+
+    class Upsert(Base, metaclass=AllOptional):
+        ...
+
+
+class ToolTagRelationDto:
+    class Base(CustomBaseModelDto):
+        tool_id: int = Field(..., description="tool id", example=1)
+        tag_id: int = Field(..., description="tag id", example=2)
+
+    class Upsert(Base, metaclass=AllOptional):
+        ...
