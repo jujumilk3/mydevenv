@@ -18,5 +18,6 @@ async def check_admin(
     user_token: str = Depends(get_current_active_user_token),
     user_service: UserService = Depends(Provide[Container.user_service]),
 ):
+    print(user_token)
     user: User = await user_service.get_user_by_user_token(user_token)
     return {"is_admin": user.is_superuser}
