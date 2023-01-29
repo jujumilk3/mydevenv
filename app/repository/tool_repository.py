@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from contextlib import AbstractContextManager
 
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.model.tag import Tag
@@ -60,6 +60,16 @@ class ToolToolRelationRepository(BaseRepository):
             found_tools = query_result.scalars().all()
             return found_tools
 
+    async def delete_by_source_tool_id_reference_tool_id(self, source_tool_id: int, reference_tool_id: int):
+        async with self.session_factory() as session:
+            query = (
+                delete(ToolToolRelation)
+                .filter(ToolToolRelation.source_tool_id == source_tool_id)
+                .filter(ToolToolRelation.reference_tool_id == reference_tool_id)
+            )
+            await session.execute(query)
+            await session.commit()
+
 
 class ToolTagRelationRepository(BaseRepository):
     def __init__(self, session_factory: Callable[..., AbstractContextManager[AsyncSession]]):
@@ -91,3 +101,13 @@ class ToolTagRelationRepository(BaseRepository):
             query_result = await session.execute(query)
             found_tags = query_result.scalars().all()
             return found_tags
+
+    async def delete_by_tool_id_tag_id(self, tool_id: int, tag_id: int):
+        async with self.session_factory() as session:
+            query = (
+                delete(ToolTagRelation)
+                .filter(ToolTagRelation.tool_id == tool_id)
+                .filter(ToolTagRelation.tag_id == tag_id)
+            )
+            await session.execute(query)
+            await session.commit()

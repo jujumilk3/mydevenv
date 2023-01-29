@@ -30,6 +30,11 @@ class ToolToolRelationService(BaseService):
     async def get_reference_tools_by_source_tool_id(self, source_tool_id: int):
         return await self.tool_tool_relation_repository.select_tool_by_source_tool_id(source_tool_id=source_tool_id)
 
+    async def remove_by_source_tool_id_reference_tool_id(self, source_tool_id: int, reference_tool_id: int):
+        return await self.tool_tool_relation_repository.delete_by_source_tool_id_reference_tool_id(
+            source_tool_id=source_tool_id, reference_tool_id=reference_tool_id
+        )
+
 
 class ToolTagRelationService(BaseService):
     def __init__(self, tool_tag_relation_repository: ToolTagRelationRepository):
@@ -44,3 +49,6 @@ class ToolTagRelationService(BaseService):
 
     async def get_tags_by_tool_id(self, tool_id: int):
         return await self.tool_tag_relation_repository.select_tag_by_tool_id(tool_id=tool_id)
+
+    async def remove_by_tool_id_tag_id(self, tool_id: int, tag_id: int):
+        return await self.tool_tag_relation_repository.delete_by_tool_id_tag_id(tool_id=tool_id, tag_id=tag_id)

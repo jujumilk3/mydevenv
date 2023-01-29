@@ -328,6 +328,18 @@ def test_tool_with_tags_and_reference_tool(client):
             "tag_names": ["language", "web"],
         },
     )
+    assert response.json()["name"] == "python"
+    assert response.json()["description"] == "python tool"
+    assert response.json()["image_url"] == "https://www.python.org/static/img/python-logo@2x.png"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://www.python.org/"
+    assert response.json()["github_url"] == "https://github.com/python/cpython"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" in only_tag_names
+    assert "web" in only_tag_names
+    python_tool_id = response.json()["id"]
 
     # get tool python
     response = client.get(
@@ -346,3 +358,87 @@ def test_tool_with_tags_and_reference_tool(client):
     assert "framework" not in only_tag_names
     assert "language" in only_tag_names
     assert "web" in only_tag_names
+
+    # patch tool python with tag
+    response = client.patch(
+        f"/v1/admin/tool/{python_tool_id}",
+        headers={
+            "Authorization": super_user_bearer_token,
+        },
+        json={
+            "name": "python",
+            "description": "python tool",
+            "image_url": "https://www.python.org/static/img/python-logo@2x.png",
+            "is_open_source": True,
+            "site_url": "https://www.python.org/",
+            "github_url": "https://github.com/python/cpython",
+            "tag_names": ["web"],
+        },
+    )
+    assert response.json()["name"] == "python"
+    assert response.json()["description"] == "python tool"
+    assert response.json()["image_url"] == "https://www.python.org/static/img/python-logo@2x.png"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://www.python.org/"
+    assert response.json()["github_url"] == "https://github.com/python/cpython"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" not in only_tag_names
+    assert "web" in only_tag_names
+
+    # patch tool python with tag
+    response = client.patch(
+        f"/v1/admin/tool/{python_tool_id}",
+        headers={
+            "Authorization": super_user_bearer_token,
+        },
+        json={
+            "name": "python",
+            "description": "python tool",
+            "image_url": "https://www.python.org/static/img/python-logo@2x.png",
+            "is_open_source": True,
+            "site_url": "https://www.python.org/",
+            "github_url": "https://github.com/python/cpython",
+            "tag_names": ["language", "framework", "web"],
+        },
+    )
+    assert response.json()["name"] == "python"
+    assert response.json()["description"] == "python tool"
+    assert response.json()["image_url"] == "https://www.python.org/static/img/python-logo@2x.png"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://www.python.org/"
+    assert response.json()["github_url"] == "https://github.com/python/cpython"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" in only_tag_names
+    assert "language" in only_tag_names
+    assert "web" in only_tag_names
+
+    # patch tool python with tag
+    response = client.patch(
+        f"/v1/admin/tool/{python_tool_id}",
+        headers={
+            "Authorization": super_user_bearer_token,
+        },
+        json={
+            "name": "python",
+            "description": "python tool",
+            "image_url": "https://www.python.org/static/img/python-logo@2x.png",
+            "is_open_source": True,
+            "site_url": "https://www.python.org/",
+            "github_url": "https://github.com/python/cpython",
+            "tag_names": [],
+        },
+    )
+    assert response.json()["name"] == "python"
+    assert response.json()["description"] == "python tool"
+    assert response.json()["image_url"] == "https://www.python.org/static/img/python-logo@2x.png"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://www.python.org/"
+    assert response.json()["github_url"] == "https://github.com/python/cpython"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" not in only_tag_names
+    assert "web" not in only_tag_names
