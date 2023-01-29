@@ -19,6 +19,14 @@ class CustomBaseModelDto(BaseModel):
     class Config:
         orm_mode = True
 
+    def pop(self, key):
+        try:
+            value = getattr(self, key)
+        except AttributeError:
+            return None
+        delattr(self, key)
+        return value
+
 
 class ModelBaseInfoDto(CustomBaseModelDto):
     id: int
