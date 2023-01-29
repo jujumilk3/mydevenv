@@ -232,7 +232,6 @@ def test_tool_with_tags_and_reference_tool(client):
     assert response.json()["is_open_source"] is True
     assert response.json()["site_url"] == "https://nodejs.org/"
     assert response.json()["github_url"] == "https://github.com/nodejs/node"
-    response.json()["id"]
 
     # remove tool
     response = client.delete(
@@ -387,6 +386,24 @@ def test_tool_with_tags_and_reference_tool(client):
     assert "language" not in only_tag_names
     assert "web" in only_tag_names
 
+    # get tool python
+    response = client.get(
+        f"/v1/tool/{python_tool_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == python_tool_id
+    assert response.json()["name"] == "python"
+    assert response.json()["description"] == "python tool"
+    assert response.json()["image_url"] == "https://www.python.org/static/img/python-logo@2x.png"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://www.python.org/"
+    assert response.json()["github_url"] == "https://github.com/python/cpython"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" not in only_tag_names
+    assert "web" in only_tag_names
+
     # patch tool python with tag
     response = client.patch(
         f"/v1/admin/tool/{python_tool_id}",
@@ -403,6 +420,24 @@ def test_tool_with_tags_and_reference_tool(client):
             "tag_names": ["language", "framework", "web"],
         },
     )
+    assert response.json()["name"] == "python"
+    assert response.json()["description"] == "python tool"
+    assert response.json()["image_url"] == "https://www.python.org/static/img/python-logo@2x.png"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://www.python.org/"
+    assert response.json()["github_url"] == "https://github.com/python/cpython"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" in only_tag_names
+    assert "language" in only_tag_names
+    assert "web" in only_tag_names
+
+    # get tool python
+    response = client.get(
+        f"/v1/tool/{python_tool_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == python_tool_id
     assert response.json()["name"] == "python"
     assert response.json()["description"] == "python tool"
     assert response.json()["image_url"] == "https://www.python.org/static/img/python-logo@2x.png"
@@ -442,3 +477,192 @@ def test_tool_with_tags_and_reference_tool(client):
     assert "framework" not in only_tag_names
     assert "language" not in only_tag_names
     assert "web" not in only_tag_names
+
+    # get tool python
+    response = client.get(
+        f"/v1/tool/{python_tool_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == python_tool_id
+    assert response.json()["name"] == "python"
+    assert response.json()["description"] == "python tool"
+    assert response.json()["image_url"] == "https://www.python.org/static/img/python-logo@2x.png"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://www.python.org/"
+    assert response.json()["github_url"] == "https://github.com/python/cpython"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" not in only_tag_names
+    assert "web" not in only_tag_names
+
+    # create tool pynecone
+    response = client.post(
+        "/v1/admin/tool",
+        headers={
+            "Authorization": super_user_bearer_token,
+        },
+        json={
+            "name": "pynecone",
+            "description": "pynecone tool",
+            "image_url": "https://",
+            "is_open_source": True,
+            "site_url": "https://",
+            "github_url": "https://",
+            "tag_names": ["framework", "language", "web"],
+            "tool_names": ["python", "node.js"],
+        },
+    )
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json()["name"] == "pynecone"
+    assert response.json()["description"] == "pynecone tool"
+    assert response.json()["image_url"] == "https://"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://"
+    assert response.json()["github_url"] == "https://"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" in only_tag_names
+    assert "language" in only_tag_names
+    assert "web" in only_tag_names
+    tools = response.json()["tools"]
+    only_tool_names = [tool["name"] for tool in tools]
+    assert "python" in only_tool_names
+    assert "node.js" in only_tool_names
+    tool_pynecone_id = response.json()["id"]
+
+    # get tool pynecone
+    response = client.get(
+        f"/v1/tool/{tool_pynecone_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == tool_pynecone_id
+    assert response.json()["name"] == "pynecone"
+    assert response.json()["description"] == "pynecone tool"
+    assert response.json()["image_url"] == "https://"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://"
+    assert response.json()["github_url"] == "https://"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" in only_tag_names
+    assert "language" in only_tag_names
+    assert "web" in only_tag_names
+    tools = response.json()["tools"]
+    only_tool_names = [tool["name"] for tool in tools]
+    assert "python" in only_tool_names
+    assert "node.js" in only_tool_names
+
+    # patch tool pynecone with tag
+    response = client.patch(
+        f"/v1/admin/tool/{tool_pynecone_id}",
+        headers={
+            "Authorization": super_user_bearer_token,
+        },
+        json={
+            "name": "pynecone",
+            "description": "pynecone tool",
+            "image_url": "https://",
+            "is_open_source": True,
+            "site_url": "https://",
+            "github_url": "https://",
+            "tag_names": ["language", "web"],
+            "tool_names": ["python"],
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == tool_pynecone_id
+    assert response.json()["name"] == "pynecone"
+    assert response.json()["description"] == "pynecone tool"
+    assert response.json()["image_url"] == "https://"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://"
+    assert response.json()["github_url"] == "https://"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" in only_tag_names
+    assert "web" in only_tag_names
+    tools = response.json()["tools"]
+    only_tool_names = [tool["name"] for tool in tools]
+    assert "python" in only_tool_names
+    assert "node.js" not in only_tool_names
+
+    # get tool pynecone
+    response = client.get(
+        f"/v1/tool/{tool_pynecone_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == tool_pynecone_id
+    assert response.json()["name"] == "pynecone"
+    assert response.json()["description"] == "pynecone tool"
+    assert response.json()["image_url"] == "https://"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://"
+    assert response.json()["github_url"] == "https://"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" in only_tag_names
+    assert "web" in only_tag_names
+    tools = response.json()["tools"]
+    only_tool_names = [tool["name"] for tool in tools]
+    assert "python" in only_tool_names
+    assert "node.js" not in only_tool_names
+
+    # patch tool pynecone with tag
+    response = client.patch(
+        f"/v1/admin/tool/{tool_pynecone_id}",
+        headers={
+            "Authorization": super_user_bearer_token,
+        },
+        json={
+            "name": "pynecone",
+            "description": "pynecone tool",
+            "image_url": "https://",
+            "is_open_source": True,
+            "site_url": "https://",
+            "github_url": "https://",
+            "tag_names": [],
+            "tool_names": [],
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == tool_pynecone_id
+    assert response.json()["name"] == "pynecone"
+    assert response.json()["description"] == "pynecone tool"
+    assert response.json()["image_url"] == "https://"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://"
+    assert response.json()["github_url"] == "https://"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" not in only_tag_names
+    assert "web" not in only_tag_names
+    tools = response.json()["tools"]
+    only_tool_names = [tool["name"] for tool in tools]
+    assert "python" not in only_tool_names
+    assert "node.js" not in only_tool_names
+
+    # get tool pynecone
+    response = client.get(
+        f"/v1/tool/{tool_pynecone_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == tool_pynecone_id
+    assert response.json()["name"] == "pynecone"
+    assert response.json()["description"] == "pynecone tool"
+    assert response.json()["image_url"] == "https://"
+    assert response.json()["is_open_source"] is True
+    assert response.json()["site_url"] == "https://"
+    assert response.json()["github_url"] == "https://"
+    tags = response.json()["tags"]
+    only_tag_names = [tag["name"] for tag in tags]
+    assert "framework" not in only_tag_names
+    assert "language" not in only_tag_names
+    assert "web" not in only_tag_names
+    tools = response.json()["tools"]
+    only_tool_names = [tool["name"] for tool in tools]
+    assert "python" not in only_tool_names
+    assert "node.js" not in only_tool_names

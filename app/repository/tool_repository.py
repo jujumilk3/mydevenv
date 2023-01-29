@@ -34,9 +34,9 @@ class ToolToolRelationRepository(BaseRepository):
         self.session_factory = session_factory
         super().__init__(session_factory, ToolToolRelation)
 
-    async def insert_with_source_tool_id_target_tool_id(self, source_tool_id: int, target_tool_id: int):
+    async def insert_with_source_tool_id_reference_tool_id(self, source_tool_id: int, reference_tool_id: int):
         async with self.session_factory() as session:
-            tool_tool_relation = ToolToolRelation(source_tool_id=source_tool_id, target_tool_id=target_tool_id)
+            tool_tool_relation = ToolToolRelation(source_tool_id=source_tool_id, reference_tool_id=reference_tool_id)
             session.add(tool_tool_relation)
             await session.commit()
             await session.refresh(tool_tool_relation)

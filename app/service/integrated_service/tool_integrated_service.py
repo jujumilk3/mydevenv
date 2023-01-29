@@ -40,8 +40,8 @@ class ToolIntegratedService:
         created_tool = await self.tool_service.add(dto=tool_upsert)
         if len(tool_ids) > 0:
             for tool_id in tool_ids:
-                await self.tool_tool_relation_service.create_with_source_tool_id_target_tool_id(
-                    source_tool_id=created_tool.id, target_tool_id=tool_id
+                await self.tool_tool_relation_service.create_with_source_tool_id_reference_tool_id(
+                    source_tool_id=created_tool.id, reference_tool_id=tool_id
                 )
         if len(tag_ids) > 0:
             for tag_id in tag_ids:
@@ -61,10 +61,8 @@ class ToolIntegratedService:
         tool_ids = [tool.id for tool in tools] if tools else []
         tag_ids = [tag.id for tag in tags] if tags else []
         patched_tool = await self.tool_service.patch_by_id(model_id=tool_id, dto=tool_upsert)
-        if len(tool_ids):
-            await self.renew_tool_by_tool_id(source_tool_id=tool_id, reference_tool_ids=tool_ids)
-        if len(tag_ids):
-            await self.renew_tags_by_tool_id(tool_id=tool_id, tag_ids=tag_ids)
+        await self.renew_tool_by_tool_id(source_tool_id=tool_id, reference_tool_ids=tool_ids)
+        await self.renew_tags_by_tool_id(tool_id=tool_id, tag_ids=tag_ids)
         tool_with_tool_tag = ToolDto.WithAdditionalInfo(
             **patched_tool.dict(),
             tools=tools,
@@ -76,7 +74,7 @@ class ToolIntegratedService:
         already_related_tools = await self.tool_tool_relation_service.get_reference_tool_ids_by_source_tool_id(
             source_tool_id=source_tool_id
         )
-        already_related_tool_ids = [tool.id for tool in already_related_tools]
+        already_related_tool_ids = [tool.reference_tool_id for tool in already_related_tools]
         for tool_id in already_related_tool_ids:
             if tool_id not in reference_tool_ids:
                 await self.tool_tool_relation_service.remove_by_source_tool_id_reference_tool_id(
@@ -84,13 +82,13 @@ class ToolIntegratedService:
                 )
         for tool_id in reference_tool_ids:
             if tool_id not in already_related_tool_ids:
-                await self.tool_tool_relation_service.create_with_source_tool_id_target_tool_id(
-                    source_tool_id=tool_id, target_tool_id=tool_id
+                await self.tool_tool_relation_service.create_with_source_tool_id_reference_tool_id(
+                    source_tool_id=tool_id, reference_tool_id=tool_id
                 )
 
     async def renew_tags_by_tool_id(self, tool_id: int, tag_ids: list):
         already_related_tag = await self.tool_tag_relation_service.get_tag_ids_by_tool_id(tool_id=tool_id)
-        already_related_tag_ids = [tag.id for tag in already_related_tag]
+        already_related_tag_ids = [tag.tag_id for tag in already_related_tag]
         for tag_id in already_related_tag_ids:
             if tag_id not in tag_ids:
                 await self.tool_tag_relation_service.remove_by_tool_id_tag_id(tool_id=tool_id, tag_id=tag_id)

@@ -19,9 +19,9 @@ class ToolToolRelationService(BaseService):
         self.tool_tool_relation_repository = tool_tool_relation_repository
         super().__init__(tool_tool_relation_repository)
 
-    async def create_with_source_tool_id_target_tool_id(self, source_tool_id: int, target_tool_id: int):
-        return await self.tool_tool_relation_repository.insert_with_source_tool_id_target_tool_id(
-            source_tool_id=source_tool_id, target_tool_id=target_tool_id
+    async def create_with_source_tool_id_reference_tool_id(self, source_tool_id: int, reference_tool_id: int):
+        return await self.tool_tool_relation_repository.insert_with_source_tool_id_reference_tool_id(
+            source_tool_id=source_tool_id, reference_tool_id=reference_tool_id
         )
 
     async def get_reference_tool_ids_by_source_tool_id(self, source_tool_id: int):
