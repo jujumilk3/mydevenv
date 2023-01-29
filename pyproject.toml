@@ -63,6 +63,7 @@ target-version = "py310"
 line-length = 120
 ignore = [
     "B008",  # do not perform function calls in argument defaults
+    "E712",  # comparison to True should be 'if cond is True:' or 'if cond:'
 ]
 exclude = [
     ".git",

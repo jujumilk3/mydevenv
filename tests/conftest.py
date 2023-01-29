@@ -75,11 +75,11 @@ async def insert_default_test_data(conn):
             await session.commit()
 
         # check inserted data
-        query = select(User).where(User.is_superuser is True)
+        query = select(User).where(User.is_superuser == True)
         query_results = (await session.execute(query)).scalars().all()
         logger.info(f"Created super user: {len(query_results)}")
 
-        query = select(User).where(User.is_superuser is False)
+        query = select(User).where(User.is_superuser == False)
         query_results = (await session.execute(query)).scalars().all()
         logger.info(f"Created normal user: {len(query_results)}")
 
