@@ -4,8 +4,8 @@ from contextlib import AbstractContextManager
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.model.tool import Tool, ToolTagRelation, ToolToolRelation
 from app.model.tag import Tag
+from app.model.tool import Tool, ToolTagRelation, ToolToolRelation
 from app.repository.base_repository import BaseRepository
 
 

@@ -56,12 +56,10 @@ class ToolIntegratedService:
     async def patch_tool_by_id(self, tool_id: int, tool_upsert: ToolDto.Upsert):
         tool_names = tool_upsert.pop("tool_names")
         tag_names = tool_upsert.pop("tag_names")
-        tools = (
-            tool_names if tool_names is None else await self.tool_service.get_by_names(names=tool_names)
-        )
+        tools = tool_names if tool_names is None else await self.tool_service.get_by_names(names=tool_names)
         tags = tag_names if tag_names is None else await self.tag_service.get_by_names(names=tag_names)
-        tool_ids = [tool.id for tool in tools] if tools else []
-        tag_ids = [tag.id for tag in tags] if tags else []
+        [tool.id for tool in tools] if tools else []
+        [tag.id for tag in tags] if tags else []
         print(tools)
         print(tags)
         tool = await self.tool_service.patch_by_id(model_id=tool_id, dto=tool_upsert)

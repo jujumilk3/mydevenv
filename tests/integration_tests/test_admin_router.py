@@ -232,7 +232,7 @@ def test_tool_with_tags_and_reference_tool(client):
     assert response.json()["is_open_source"] is True
     assert response.json()["site_url"] == "https://nodejs.org/"
     assert response.json()["github_url"] == "https://github.com/nodejs/node"
-    nodejs_tool_id = response.json()["id"]
+    response.json()["id"]
 
     # remove tool
     response = client.delete(
@@ -346,5 +346,3 @@ def test_tool_with_tags_and_reference_tool(client):
     assert "framework" not in only_tag_names
     assert "language" in only_tag_names
     assert "web" in only_tag_names
-
-
