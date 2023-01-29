@@ -27,6 +27,7 @@ class Container(containers.DeclarativeContainer):
             "app.api.v1.endpoint.auth",
             "app.api.v1.endpoint.bucket",
             "app.api.v1.endpoint.tag",
+            "app.api.v1.endpoint.tool",
             "app.api.v1.endpoint.user",
             "app.core.security",
             "app.core.dependency",
