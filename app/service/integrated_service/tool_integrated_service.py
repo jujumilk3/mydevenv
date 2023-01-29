@@ -73,11 +73,15 @@ class ToolIntegratedService:
         return tool_with_tool_tag
 
     async def renew_tool_by_tool_id(self, source_tool_id: int, reference_tool_ids: list[int]):
-        already_related_tools = await self.tool_tool_relation_service.get_reference_tool_ids_by_source_tool_id(source_tool_id=source_tool_id)
+        already_related_tools = await self.tool_tool_relation_service.get_reference_tool_ids_by_source_tool_id(
+            source_tool_id=source_tool_id
+        )
         already_related_tool_ids = [tool.id for tool in already_related_tools]
         for tool_id in already_related_tool_ids:
             if tool_id not in reference_tool_ids:
-                await self.tool_tool_relation_service.remove_by_source_tool_id_reference_tool_id(source_tool_id=source_tool_id, reference_tool_id=tool_id)
+                await self.tool_tool_relation_service.remove_by_source_tool_id_reference_tool_id(
+                    source_tool_id=source_tool_id, reference_tool_id=tool_id
+                )
         for tool_id in reference_tool_ids:
             if tool_id not in already_related_tool_ids:
                 await self.tool_tool_relation_service.create_with_source_tool_id_target_tool_id(
