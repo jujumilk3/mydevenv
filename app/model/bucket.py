@@ -32,8 +32,7 @@ class BucketDto:
         user_info: UserDto.Base = Field(default=None, example=None)
         is_published: bool = Field(default=True, nullable=False, example=True)
 
-    class Upsert(Base, metaclass=AllOptional):
-        ...
+    class Upsert(Base, metaclass=AllOptional): ...
 
     class UpsertWithUserToken(Base, metaclass=AllOptional):
         user_token: str

@@ -41,8 +41,7 @@ class ToolDto:
             None, description="tool tag names", example=["language", "framework", "library"]
         )
 
-    class WithBaseInfo(ModelBaseInfoDto, Base, metaclass=AllOptional):
-        ...
+    class WithBaseInfo(ModelBaseInfoDto, Base, metaclass=AllOptional): ...
 
     class WithAdditionalInfo(WithBaseInfo, metaclass=AllOptional):
         tools: list["ToolDto.WithAdditionalInfo"] | None = Field(None, description="tools", example=[])
@@ -60,8 +59,7 @@ class ToolToolRelationDto:
         source_tool_id: int = Field(..., description="source tool id", example=1)
         reference_tool_id: int = Field(..., description="reference tool id", example=2)
 
-    class Upsert(Base, metaclass=AllOptional):
-        ...
+    class Upsert(Base, metaclass=AllOptional): ...
 
 
 class ToolTagRelationDto:
@@ -69,5 +67,4 @@ class ToolTagRelationDto:
         tool_id: int = Field(..., description="tool id", example=1)
         tag_id: int = Field(..., description="tag id", example=2)
 
-    class Upsert(Base, metaclass=AllOptional):
-        ...
+    class Upsert(Base, metaclass=AllOptional): ...
