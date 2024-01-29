@@ -26,8 +26,7 @@ class TagDto:
         like_num: int = Field(default=0, example=0)
         is_liked: bool = Field(default=False, example=False)
 
-    class Upsert(Base, metaclass=AllOptional):
-        ...
+    class Upsert(Base, metaclass=AllOptional): ...
 
     class UpsertWithUserToken(Base, metaclass=AllOptional):
         user_token: str
