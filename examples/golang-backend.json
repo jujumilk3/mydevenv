@@ -1,0 +1,69 @@
+{
+  "name": "Go Backend Development Environment",
+  "description": "Complete Go development environment for backend services",
+  "platform": "linux",
+  "version": "1.0.0",
+  "packages": [
+    {
+      "name": "golang",
+      "version": "1.21",
+      "package_manager": "apt",
+      "description": "Go programming language",
+      "install_command": "sudo apt-get install -y golang-1.21",
+      "is_global": true,
+      "platform": "linux"
+    },
+    {
+      "name": "golangci-lint",
+      "version": "latest",
+      "package_manager": "custom",
+      "description": "Go linter aggregator",
+      "install_command": "curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin",
+      "is_global": true,
+      "platform": "all"
+    },
+    {
+      "name": "air",
+      "version": "latest",
+      "package_manager": "go",
+      "description": "Live reload for Go apps",
+      "install_command": "go install github.com/cosmtrek/air@latest",
+      "is_global": true,
+      "platform": "all"
+    }
+  ],
+  "environments": [
+    {
+      "key": "GOPATH",
+      "value": "$HOME/go",
+      "description": "Go workspace path",
+      "is_secret": false,
+      "platform": "all"
+    },
+    {
+      "key": "GOROOT",
+      "value": "/usr/local/go",
+      "description": "Go installation path",
+      "is_secret": false,
+      "platform": "linux"
+    },
+    {
+      "key": "PATH",
+      "value": "$PATH:$GOPATH/bin:$GOROOT/bin",
+      "description": "Add Go binaries to PATH",
+      "is_secret": false,
+      "platform": "all"
+    }
+  ],
+  "config_files": [
+    {
+      "name": ".air.toml",
+      "file_path": "./.air.toml",
+      "content": "root = \".\"\ntestdata_dir = \"testdata\"\ntmp_dir = \"tmp\"\n\n[build]\n  args_bin = []\n  bin = \"./tmp/main\"\n  cmd = \"go build -o ./tmp/main .\"\n  delay = 1000\n  exclude_dir = [\"assets\", \"tmp\", \"vendor\", \"testdata\"]\n  exclude_file = []\n  exclude_regex = [\"_test.go\"]\n  exclude_unchanged = false\n  follow_symlink = false\n  full_bin = \"\"\n  include_dir = []\n  include_ext = [\"go\", \"tpl\", \"tmpl\", \"html\"]\n  include_file = []\n  kill_delay = \"0s\"\n  log = \"build-errors.log\"\n  poll = false\n  poll_interval = 0\n  rerun = false\n  rerun_delay = 500\n  send_interrupt = false\n  stop_on_error = false\n\n[color]\n  app = \"\"\n  build = \"yellow\"\n  main = \"magenta\"\n  runner = \"green\"\n  watcher = \"cyan\"\n\n[log]\n  main_only = false\n  time = false\n\n[misc]\n  clean_on_exit = false\n\n[screen]\n  clear_on_rebuild = false\n  keep_scroll = true",
+      "file_type": "toml",
+      "platform": "all",
+      "description": "Air configuration for live reload"
+    }
+  ],
+  "readme": "# Go Backend Development Environment\n\nComplete Go development setup for building backend services.\n\n## Included Tools\n\n- Go 1.21: Programming language\n- golangci-lint: Comprehensive linter\n- air: Live reload for development\n\n## Installation\n\n```bash\nbash install.sh\n```\n\n## Usage\n\nBuild and run:\n\n```bash\ngo build -o app .\n./app\n```\n\nDevelopment with live reload:\n\n```bash\nair\n```\n\nRun linter:\n\n```bash\ngolangci-lint run\n```"
+}

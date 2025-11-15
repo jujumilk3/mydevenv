@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: mydevenv-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./db.sqlite3:/app/db.sqlite3
+    environment:
+      - ENV=dev
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-mydevenv}
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Optional: Add a database service if needed
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: mydevenv-db
+  #   environment:
+  #     POSTGRES_USER: mydevenv
+  #     POSTGRES_PASSWORD: mydevenv
+  #     POSTGRES_DB: mydevenv
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+# volumes:
+#   postgres_data:

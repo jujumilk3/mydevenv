@@ -1,0 +1,83 @@
+{
+  "name": "Node.js Full Stack Environment",
+  "description": "Complete Node.js development environment for full stack applications",
+  "platform": "all",
+  "version": "1.0.0",
+  "packages": [
+    {
+      "name": "typescript",
+      "version": "5.0.0",
+      "package_manager": "npm",
+      "description": "TypeScript language",
+      "is_global": true,
+      "platform": "all"
+    },
+    {
+      "name": "nodemon",
+      "version": "latest",
+      "package_manager": "npm",
+      "description": "Auto-restart for Node.js",
+      "is_global": true,
+      "platform": "all"
+    },
+    {
+      "name": "ts-node",
+      "version": "latest",
+      "package_manager": "npm",
+      "description": "TypeScript execution for Node.js",
+      "is_global": true,
+      "platform": "all"
+    },
+    {
+      "name": "eslint",
+      "version": "latest",
+      "package_manager": "npm",
+      "description": "JavaScript linter",
+      "is_global": true,
+      "platform": "all"
+    },
+    {
+      "name": "prettier",
+      "version": "latest",
+      "package_manager": "npm",
+      "description": "Code formatter",
+      "is_global": true,
+      "platform": "all"
+    }
+  ],
+  "environments": [
+    {
+      "key": "NODE_ENV",
+      "value": "development",
+      "description": "Node environment",
+      "is_secret": false,
+      "platform": "all"
+    },
+    {
+      "key": "PORT",
+      "value": "3000",
+      "description": "Default server port",
+      "is_secret": false,
+      "platform": "all"
+    }
+  ],
+  "config_files": [
+    {
+      "name": ".eslintrc.json",
+      "file_path": "./.eslintrc.json",
+      "content": "{\n  \"env\": {\n    \"es2021\": true,\n    \"node\": true\n  },\n  \"extends\": [\n    \"eslint:recommended\",\n    \"plugin:@typescript-eslint/recommended\"\n  ],\n  \"parser\": \"@typescript-eslint/parser\",\n  \"parserOptions\": {\n    \"ecmaVersion\": \"latest\",\n    \"sourceType\": \"module\"\n  },\n  \"plugins\": [\n    \"@typescript-eslint\"\n  ],\n  \"rules\": {}\n}",
+      "file_type": "json",
+      "platform": "all",
+      "description": "ESLint configuration"
+    },
+    {
+      "name": ".prettierrc",
+      "file_path": "./.prettierrc",
+      "content": "{\n  \"semi\": true,\n  \"trailingComma\": \"all\",\n  \"singleQuote\": true,\n  \"printWidth\": 100,\n  \"tabWidth\": 2\n}",
+      "file_type": "json",
+      "platform": "all",
+      "description": "Prettier configuration"
+    }
+  ],
+  "readme": "# Node.js Full Stack Environment\n\nComplete Node.js development setup with TypeScript, ESLint, and Prettier.\n\n## Included Tools\n\n- TypeScript: Static typing for JavaScript\n- Nodemon: Auto-restart on file changes\n- ts-node: Execute TypeScript directly\n- ESLint: Code linting\n- Prettier: Code formatting\n\n## Installation\n\n```bash\nbash install.sh\n```\n\n## Usage\n\nRun TypeScript files:\n\n```bash\nts-node src/index.ts\n```\n\nDevelopment with auto-restart:\n\n```bash\nnodemon --exec ts-node src/index.ts\n```"
+}
