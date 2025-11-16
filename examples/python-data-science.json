@@ -1,0 +1,75 @@
+{
+  "name": "Python Data Science Environment",
+  "description": "Complete Python environment for data science and machine learning",
+  "platform": "all",
+  "version": "1.0.0",
+  "packages": [
+    {
+      "name": "pandas",
+      "version": "2.0.0",
+      "package_manager": "pip",
+      "description": "Data manipulation and analysis library",
+      "is_global": false,
+      "platform": "all"
+    },
+    {
+      "name": "numpy",
+      "version": "1.24.0",
+      "package_manager": "pip",
+      "description": "Fundamental package for scientific computing",
+      "is_global": false,
+      "platform": "all"
+    },
+    {
+      "name": "matplotlib",
+      "version": "3.7.0",
+      "package_manager": "pip",
+      "description": "Plotting library",
+      "is_global": false,
+      "platform": "all"
+    },
+    {
+      "name": "scikit-learn",
+      "version": "1.2.0",
+      "package_manager": "pip",
+      "description": "Machine learning library",
+      "is_global": false,
+      "platform": "all"
+    },
+    {
+      "name": "jupyter",
+      "version": "latest",
+      "package_manager": "pip",
+      "description": "Interactive computing environment",
+      "is_global": false,
+      "platform": "all"
+    }
+  ],
+  "environments": [
+    {
+      "key": "PYTHONPATH",
+      "value": "/usr/local/lib/python3.10/site-packages",
+      "description": "Python module search path",
+      "is_secret": false,
+      "platform": "all"
+    },
+    {
+      "key": "JUPYTER_CONFIG_DIR",
+      "value": "~/.jupyter",
+      "description": "Jupyter configuration directory",
+      "is_secret": false,
+      "platform": "all"
+    }
+  ],
+  "config_files": [
+    {
+      "name": ".pylintrc",
+      "file_path": "~/.pylintrc",
+      "content": "[MASTER]\ninit-hook='import sys; sys.path.append(\"/path/to/root\")'\n\n[MESSAGES CONTROL]\ndisable=C0111,C0103,R0903",
+      "file_type": "text",
+      "platform": "all",
+      "description": "Pylint configuration"
+    }
+  ],
+  "readme": "# Python Data Science Environment\n\nComplete setup for data science and machine learning with Python.\n\n## Included Packages\n\n- pandas: Data manipulation\n- numpy: Numerical computing\n- matplotlib: Data visualization\n- scikit-learn: Machine learning\n- jupyter: Interactive notebooks\n\n## Installation\n\n```bash\nbash install.sh\n```\n\n## Usage\n\nStart Jupyter notebook:\n\n```bash\njupyter notebook\n```"
+}
