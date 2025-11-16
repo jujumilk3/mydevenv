@@ -26,9 +26,7 @@ class EnvironmentDto:
     class Base(CustomBaseModelDto):
         key: str = Field(..., description="environment variable key", example="NODE_ENV")
         value: str = Field(..., description="environment variable value", example="development")
-        description: str = Field(
-            default="", description="environment variable description", example="Node environment"
-        )
+        description: str = Field(default="", description="environment variable description", example="Node environment")
         is_secret: bool = Field(default=False, description="secret variable", example=False)
         platform: str = Field(default="all", description="target platform", example="all")
 

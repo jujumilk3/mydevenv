@@ -59,9 +59,7 @@ class ScriptGenerator:
                         global_flag = "-g" if pkg.get("is_global") else ""
                         version = pkg.get("version", "latest")
                         version_spec = f"@{version}" if version != "latest" else ""
-                        cmd = (
-                            pkg.get("install_command") or f"npm install {global_flag} {pkg['name']}{version_spec}"
-                        )
+                        cmd = pkg.get("install_command") or f"npm install {global_flag} {pkg['name']}{version_spec}"
                         script_lines.append(cmd)
                 else:
                     # Custom package manager

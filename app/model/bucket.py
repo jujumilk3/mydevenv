@@ -7,9 +7,9 @@ from app.model.base_model import AllOptional, CustomBaseModel, CustomBaseModelDt
 from app.model.user import UserDto
 
 if TYPE_CHECKING:
-    from app.model.package import PackageDto
-    from app.model.environment import EnvironmentDto
     from app.model.config_file import ConfigFileDto
+    from app.model.environment import EnvironmentDto
+    from app.model.package import PackageDto
 
 
 class Bucket(CustomBaseModel, table=True):

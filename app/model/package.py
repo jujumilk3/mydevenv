@@ -30,9 +30,7 @@ class PackageDto:
         description: str = Field(..., description="package description", example="Modern web framework")
         package_manager: str = Field(..., description="package manager", example="pip")
         version: str = Field(default="latest", description="package version", example="0.100.0")
-        install_command: str = Field(
-            default="", description="custom install command", example="pip install fastapi"
-        )
+        install_command: str = Field(default="", description="custom install command", example="pip install fastapi")
         is_global: bool = Field(default=False, description="global installation", example=False)
         platform: str = Field(default="all", description="target platform", example="all")
 

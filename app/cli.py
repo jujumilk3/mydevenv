@@ -2,12 +2,10 @@
 
 import json
 from pathlib import Path
-from typing import Optional
 
 import httpx
 import typer
 from rich.console import Console
-from rich.table import Table
 
 app = typer.Typer(help="mydevenv - Development Environment Sharing Platform")
 console = Console()
@@ -19,7 +17,7 @@ DEFAULT_API_URL = "http://localhost:8000/v1"
 @app.command()
 def export(
     bucket_id: int = typer.Argument(..., help="Bucket ID to export"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file path"),
+    output: Path | None = typer.Option(None, "--output", "-o", help="Output file path"),
     format: str = typer.Option("json", "--format", "-f", help="Export format (json, yaml)"),
     api_url: str = typer.Option(DEFAULT_API_URL, "--api-url", help="API server URL"),
 ):
@@ -42,7 +40,7 @@ def export(
 @app.command()
 def install_script(
     bucket_id: int = typer.Argument(..., help="Bucket ID"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file path"),
+    output: Path | None = typer.Option(None, "--output", "-o", help="Output file path"),
     script_type: str = typer.Option(
         "bash", "--type", "-t", help="Script type (bash, powershell, dockerfile, docker-compose)"
     ),
