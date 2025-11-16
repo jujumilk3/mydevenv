@@ -8,6 +8,7 @@
 
 ## 🌟 Features
 
+- **웹 인터페이스**: 모던한 React 기반 웹 UI로 환경을 쉽게 관리
 - **환경 공유**: 개발 환경을 JSON/YAML로 내보내고 다른 사람과 공유
 - **자동 설치 스크립트**: Bash, PowerShell, Dockerfile 자동 생성
 - **패키지 관리**: pip, npm, brew, apt 등 다양한 패키지 매니저 지원
@@ -32,25 +33,35 @@ poetry install
 poetry shell
 ```
 
-### Using Docker
+### Using Docker (Recommended for Full Stack)
 
 ```bash
-# Build and run with docker-compose
+# Build and run with docker-compose (API + Frontend)
 docker-compose up -d
 
-# API will be available at http://localhost:8000
+# Services will be available at:
+# - Frontend: http://localhost:3000
+# - API: http://localhost:8000
+# - API Docs: http://localhost:8000/docs
 ```
 
 ## 🚀 Quick Start
 
-### 1. Start the API Server
+### 1. Start the Full Stack
 
 ```bash
-# Using poetry
+# Using docker-compose (API + Frontend)
+docker-compose up
+
+# Or run separately:
+
+# Backend (API)
 poetry run uvicorn app.main:app --reload
 
-# Or using docker-compose
-docker-compose up
+# Frontend (in separate terminal)
+cd frontend
+npm install
+npm run dev
 ```
 
 ### 2. Use the CLI Tool
@@ -214,7 +225,7 @@ mydevenv export-all 1 --output ./exported
 
 ```
 mydevenv/
-├── app/
+├── app/                     # Backend (FastAPI)
 │   ├── api/v1/endpoint/     # API endpoints
 │   ├── core/                # Core configurations
 │   ├── model/               # Database models
@@ -228,10 +239,20 @@ mydevenv/
 │   │   └── script_generator.py # Script generation
 │   ├── cli.py               # CLI tool
 │   └── main.py              # Application entry point
+├── frontend/                # Frontend (React + Vite)
+│   ├── src/
+│   │   ├── components/      # UI components
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # API services
+│   │   ├── types/           # TypeScript types
+│   │   └── App.tsx          # Main app
+│   ├── index.html
+│   └── package.json
+├── examples/                # Example environments
 ├── tests/                   # Tests
-├── Dockerfile               # Docker configuration
-├── docker-compose.yml       # Docker Compose configuration
-└── pyproject.toml           # Project dependencies
+├── Dockerfile               # Backend Docker config
+├── docker-compose.yml       # Full stack Docker config
+└── pyproject.toml           # Backend dependencies
 ```
 
 ## 🛠️ Development
