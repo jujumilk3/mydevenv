@@ -34,7 +34,7 @@ def export(
 
     except httpx.HTTPError as e:
         console.print(f"[red]✗[/red] Error: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from None
 
 
 @app.command()
@@ -62,7 +62,7 @@ def install_script(
 
     except httpx.HTTPError as e:
         console.print(f"[red]✗[/red] Error: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from None
 
 
 @app.command()
@@ -88,7 +88,7 @@ def export_all(
 
     except httpx.HTTPError as e:
         console.print(f"[red]✗[/red] Error: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from None
 
 
 @app.command()
@@ -107,7 +107,10 @@ def init(
         "packages": [],
         "environments": [],
         "config_files": [],
-        "readme": f"# {name}\n\n{description}\n\n## Installation\n\nRun the installation script:\n\n```bash\nbash install.sh\n```",
+        "readme": (
+            f"# {name}\n\n{description}\n\n## Installation\n\n"
+            "Run the installation script:\n\n```bash\nbash install.sh\n```"
+        ),
     }
 
     output.write_text(json.dumps(config, indent=2))
@@ -151,7 +154,7 @@ def generate(
 
     except Exception as e:
         console.print(f"[red]✗[/red] Error: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from None
 
 
 @app.command()
